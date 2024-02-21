@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kopian | Home</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+    <header>
+        <div class="slider-container">
+            <div class="slides">
+                <div class="slide" style="background-image: url('assets/images/kopicappucino.jpg');"></div>
+                <div class="slide" style="background-image: url('assets/images/kopiespresso.jpg');"></div>
+                <div class="slide" style="background-image: url('assets/images/kopilatte.jpg');"></div>
+                <div class="slide" style="background-image: url('assets/images/kopiitem.jpg');"></div>
+            </div>
+            <button class="prev" onclick="prevSlide()">                
+                <span class="material-symbols-outlined">arrow_back_ios</span>
+            </button>
+            <button class="next" onclick="nextSlide()">
+                <span class="material-symbols-outlined">arrow_forward_ios</span>
+            </button>
+        </div>        
+        <nav>
+            <ul>
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+                <li class="dropdown">
+                    <a>Varian</a>
+                    <div class="dropdown-content">
+                        <a href="#kopiitem">Kopi Hitam</a>
+                        <a href="#kopilatte">Kopi Latte</a>
+                        <a href="#kopicappucino">Kopi Cappucino</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="content">
+            <article class="card" id="home">
+                <h2>Kopian</h2>
+                <div>
+                    <img src="assets/images/bijikopi.jpg">
+                </div>
+                <p>Dalam perjalananmu melewati jalan berliku di pegunungan yang menjulang tinggi, aroma kopi segar memeluk indra penciumanmu seolah mengundangmu untuk mengikuti jejaknya. Di sebuah desa kecil yang tersembunyi di lereng gunung, terdapat ladang kopi yang memberikan kehidupan pada merek terkenal ini.</p>
+                <p>Setiap tegukan kopi Kopian adalah kisah petualangan dari tanah tempat kopi tumbuh, melalui tangan-tangan yang penuh dedikasi, hingga ke tahap penyeduhan yang sempurna di cangkirmu. Dengan setiap tegukan, kamu membawa dirimu pada perjalanan yang memenuhi jiwa dengan kenikmatan dan kepuasan yang mendalam. Kopian bukan sekadar kopi, melainkan cerita yang memperkaya pengalaman hidupmu.</p>
+            </article>
+            <article class="card">
+                <h2>Varian</h2>
+                <div>
+                    <img src="assets/images/kopikonten.jpg">
+                </div>
+                <p>Dalam dunia kopi yang luas, terdapat berbagai varian yang menggoda selera, memikat indera penciuman, dan memanjakan lidah. Di setiap tegukan, kita tidak hanya merasakan rasa, tetapi juga merasakan kisah yang tersembunyi di balik biji kopi yang telah diperjalani melalui proses panjang dari ladang hingga cangkir kita.</p>
+                <p id="kopiitem">Kopi hitam, yang mungkin menjadi varian yang paling umum, menawarkan kekuatan dan keaslian yang klasik. Dengan aroma yang menggugah selera dan rasa yang mendalam, kopi hitam menjadi sahabat setia di pagi hari dan pendamping yang sempurna di siang hari yang sibuk. Tidak pernah mengkhianati dengan karakternya yang tegas, kopi hitam adalah representasi dari sederhana yang elegan.</p>
+                <p id="kopilatte">Selain itu, kita memiliki latte yang memadukan kehangatan espresso dengan kelembutan susu, menciptakan harmoni rasa yang menggoda. Lapisan krimi dari susu yang diuapkan menambah kelezatan setiap tegukan, sementara rasa kaya dari espresso memberikan karakter yang mendalam. Latte adalah simfoni rasa yang melibatkan indera kita dalam pengalaman yang menyenangkan.</p>
+                <p id="kopicappucino">Cappuccino, dengan perpaduan espresso, susu, dan busa susu, menawarkan kompleksitas rasa yang memanjakan lidah. Dengan lapisan busa susu yang lembut di atasnya, cappuccino memberikan sensasi yang memuaskan dengan setiap tegukan. Rasanya yang seimbang antara manis dan pahit, menjadikan cappuccino sebagai pilihan yang sempurna untuk menikmati momen santai di tengah kesibukan.</p>
+                <p>Dari Americano yang sederhana namun kuat, hingga Flat White yang lembut dan berkelas, setiap varian kopi menawarkan pengalaman yang unik. Melalui sentuhan biji kopi yang diproses dengan cermat dan keahlian, kopi membawa kita dalam perjalanan rasa yang memuaskan. Di setiap cangkir kopi, terdapat petualangan rasa yang menanti untuk dinikmati, menjadikan kopi sebagai teman setia dalam setiap momen kehidupan.</p>
+            </article>
+        </div>
+        <aside>
+            <article class="profile card">
+                <header>
+                    <h2>My Profile</h2>
+                    <figure>
+                        <div>
+                            <img src="assets/images/profile.jpg">
+                        </div>
+                        <figcaption>
+                            <p>M. Anwar Fauzan</p>
+                        </figcaption>
+                    </figure>
+                </header>
+                <section>
+                    <p>Serang, Banten</p>
+                    <p>Teknik Informatika</p>
+                    <p>Universitas Banten Jaya</p>
+                    <p>SIB Cycle 6 Cohort R-04</p>
+                </section>
+            </article>
+        </aside>
+    </main>
+    <footer>
+        <p>Kopian &copy; Belajar Dasar Pemrograman Web 2024 Dicoding Academy</p>
+    </footer>
+    <script src="assets/javascripts/script.js"></script>
+</body>
+</html>
