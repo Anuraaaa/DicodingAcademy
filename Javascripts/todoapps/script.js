@@ -30,8 +30,17 @@ document.addEventListener(RENDER_EVENT, function () {
     }
 });
 
-document.addEventListener(SAVED_EVENT, function () {
-    console.log(localStorage.getItem(STORAGE_KEY));
+document.addEventListener(SAVED_EVENT, function (event) {
+    Toastify({
+        text: event.detail.messages,
+        className: "info",
+        style: {
+            background: "#5F5DE2",
+            borderRadius: "5px"
+        },
+        gravity: "bottom",
+        avatar: "https://png.pngtree.com/png-clipart/20210411/original/pngtree-green-check-mark-icon-design-template-vector-png-image_6219078.jpg"
+    }).showToast();
 });
 
 
@@ -44,7 +53,7 @@ function addTodo() {
     todos.push(todoObject);
 
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData();
+    saveData("Berhasil menambahkan task");
 }
 
 function generateId() {
@@ -114,7 +123,7 @@ function addTaskToCompleted(todoId) {
 
     todoTarget.isCompleted = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData();
+    saveData("Berhasil menambah task complete");
 }
 
 function findTodo(todoId) {
@@ -143,7 +152,7 @@ function removeTaskFromCompleted(todoId) {
 
     todos.splice(todoTarget, 1);
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData();
+    saveData("Berhasil menghapus task complete");
 }
 
 function undoTaskFromCompleted(todoId) {
@@ -153,14 +162,19 @@ function undoTaskFromCompleted(todoId) {
 
     todoTarget.isCompleted = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData();
+    saveData("Berhasil membatalkan task complete");
 }
 
-function saveData() {
+function saveData(message) {
     if (isStorageExist()) {
         const parsed = JSON.stringify(todos);
         localStorage.setItem(STORAGE_KEY, parsed);
-        document.dispatchEvent(new Event(SAVED_EVENT));
+        const eventCustom = new CustomEvent(SAVED_EVENT, {
+            detail: {
+                messages: message
+            }
+        });
+        document.dispatchEvent(eventCustom);
     }
 }
 
