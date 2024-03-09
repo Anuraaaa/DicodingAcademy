@@ -101,7 +101,7 @@ function makeBook(bookObject) {
         undoButton.textContent = 'undo'
 
         undoButton.addEventListener('click', function () {
-            undoTaskFromCompleted(bookObject.id);
+            undoBookFromCompleted(bookObject.id);
         });
 
         const trashButton = document.createElement('span');
@@ -110,7 +110,7 @@ function makeBook(bookObject) {
         trashButton.textContent = 'delete';
 
         trashButton.addEventListener('click', function () {
-            removeTaskFromCompleted(bookObject.id);
+            removeBookFromCompleted(bookObject.id);
         });
 
         container.append(undoButton, trashButton);
@@ -121,7 +121,7 @@ function makeBook(bookObject) {
         checkButton.textContent = 'check_circle';
 
         checkButton.addEventListener('click', function () {
-            addTaskToCompleted(bookObject.id);
+            addBookToCompleted(bookObject.id);
         });
 
         container.append(checkButton);
@@ -130,14 +130,14 @@ function makeBook(bookObject) {
     return container;
 }
 
-function addTaskToCompleted(bookId) {
+function addBookToCompleted(bookId) {
     const bookTarget = findBook(bookId);
 
     if (bookTarget == null) return;
 
     bookTarget.hasRead = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData("Berhasil menambah task complete");
+    saveData("Berhasil menyelesaikan bacaan buku");
 }
 
 function findBook(bookId) {
@@ -159,24 +159,24 @@ function findBookIndex(bookId) {
     return -1;
 }
 
-function removeTaskFromCompleted(bookId) {
+function removeBookFromCompleted(bookId) {
     const bookTarget = findBookIndex(bookId);
 
     if (bookTarget === -1) return;
 
     books.splice(bookTarget, 1);
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData("Berhasil menghapus task complete");
+    saveData("Berhasil menghapus buku");
 }
 
-function undoTaskFromCompleted(bookId) {
+function undoBookFromCompleted(bookId) {
     const bookTarget = findBook(bookId);
 
     if (bookTarget == null) return;
 
     bookTarget.hasRead = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData("Berhasil membatalkan task complete");
+    saveData("Berhasil menambahkan buku belum dibaca");
 }
 
 function saveData(message) {
