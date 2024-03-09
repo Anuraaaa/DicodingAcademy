@@ -5,7 +5,11 @@
     --bg-secondary: #9AD0C2;
     --bg-form: #F8F9FA;
     --font-size-mobile: 12px;
-    --font-size-non-mobile: 24px;
+    --font-size: 24px;
+    --font-size-item-title: 18px;
+    --font-size-item-date: 12px;
+    --font-size-item-title-mobile: 12px;
+    --font-size-item-date-mobile: 8px;
 }
 
 *, html, body {
@@ -21,7 +25,7 @@ header {
 }
 
 header > h1 {
-    font-size: var(--font-size-non-mobile);    
+    font-size: 24px;    
     font-weight: 650;
 }
 
@@ -53,7 +57,7 @@ header > h1 {
 }
 
 .container > h2 {
-    font-size: var(--font-size-non-mobile);    
+    font-size: var(--font-size);    
     font-weight: 600;
 }
 
@@ -65,7 +69,7 @@ header > h1 {
 }
 
 .form-group > label {
-    font-size: var(--font-size-non-mobile);
+    font-size: var(--font-size);
 }
 
 .form-group > input {
@@ -83,12 +87,109 @@ header > h1 {
     padding: 8px;
     border-radius: 5px;
     width: 10%;
-    align-self: end;    
+    align-self: end;
+    font-size: 12px;    
 }
 
 .container > button:hover {
     background-color: var(--bg-secondary);
     cursor: pointer;
+}
+
+.item {
+    border-radius: 16px;
+    margin-top: 16px;
+    padding: 12px 24px 12px 24px;
+    background: white;
+    display: flex;
+    align-items: center;
+}
+
+.item > .inner h2 {
+    font-size: var(--font-size-item-title);
+    margin-bottom: unset;
+}
+
+.item > .inner p {
+    font-size: var(--font-size-item-date);
+    margin-top: 5px;
+}
+
+.check-button {
+    color: black;
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+}
+
+.check-button:hover {
+    color: green;
+}
+
+.trash-button {
+    color: black;
+    margin-left: 16px;
+    cursor: pointer;
+    border: none;
+}
+
+.trash-button:hover {
+    color: red;
+}
+
+.undo-button {
+    color: black;
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+}
+
+.undo-button:hover {
+    color: blue;
+}
+
+.check-button:focus, .trash-button {
+    outline: none;
+}
+
+#toast {
+    visibility: hidden;
+    background-color: #265073;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    right: 2.5%;
+    bottom: 30px;
+    font-size: var(--font-size);
+}
+  
+#toast.show-toast {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }
 
 /* only mobile screen */
@@ -112,6 +213,24 @@ header > h1 {
 
     .container > button {
         width: 25%;
+        font-size: 10px;
+    }
+
+    .item > .inner h2 {
+        font-size: var(--font-size-item-title-mobile);
+        margin-bottom: unset;
+    }
+    
+    .item > .inner p {
+        font-size: var(--font-size-item-date-mobile);
+        margin-top: 5px;
+    }    
+
+    #toast {
         font-size: var(--font-size-mobile);
+    }
+
+    header > h1 {
+        font-size: 18px;
     }
 }
