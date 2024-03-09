@@ -4,6 +4,8 @@
     --bg-primary: #2D9596;
     --bg-secondary: #9AD0C2;
     --bg-form: #F8F9FA;
+    --font-size-mobile: 12px;
+    --font-size-non-mobile: 24px;
 }
 
 *, html, body {
@@ -14,20 +16,24 @@
 }
 
 header {
-    padding: 18px;
+    padding: 1rem;
     background-color: var(--bg-primary);
 }
 
 header > h1 {
-    font-size: 24px;    
+    font-size: var(--font-size-non-mobile);    
     font-weight: 650;
+}
+
+.container-base {
+    min-height: 100vh;
 }
 
 .wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 24px;
+    padding: 3rem 0;
     gap: 16px;
 }
 
@@ -47,6 +53,7 @@ header > h1 {
 }
 
 .container > h2 {
+    font-size: var(--font-size-non-mobile);    
     font-weight: 600;
 }
 
@@ -55,6 +62,10 @@ header > h1 {
     flex-direction: column;
     gap: 4px;
     margin: 8px 0;
+}
+
+.form-group > label {
+    font-size: var(--font-size-non-mobile);
 }
 
 .form-group > input {
@@ -78,4 +89,29 @@ header > h1 {
 .container > button:hover {
     background-color: var(--bg-secondary);
     cursor: pointer;
+}
+
+/* only mobile screen */
+@media only screen and (max-width: 768px){
+ 
+    .container > h1 {
+        font-size: var(--font-size-mobile);
+    }
+
+    .form-group > label {
+        font-size: var(--font-size-mobile);
+    }
+
+    .container {
+        width: 80%;
+    }
+
+    .container > h2 {
+        font-size: var(--font-size-mobile);    
+    }
+
+    .container > button {
+        width: 25%;
+        font-size: var(--font-size-mobile);
+    }
 }

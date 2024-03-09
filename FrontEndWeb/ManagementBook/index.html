@@ -13,31 +13,33 @@
         <h1>Management Buku</h1>
     </header>
 
-    <div class="wrapper">
-        <div class="container">
-            <h1>Tambah Buku</h1>
-            <div class="form-group">
-                <label>Masukkan nama buku</label>
-                <input type="text">
+    <div class="container-base">
+        <div class="wrapper">
+            <div class="container">
+                <h1>Tambah Buku</h1>
+                <div class="form-group">
+                    <label>Masukkan nama buku</label>
+                    <input type="text">
+                </div>
+                <div class="form-group">
+                    <label>Masukkan tanggal harus selesai</label>
+                    <input type="date">
+                </div>
+                <button>Submit</button>
             </div>
-            <div class="form-group">
-                <label>Masukkan tanggal harus selesai</label>
-                <input type="date">
+    
+            <div class="container">
+                <h2>Yang sudah dibaca</h2>
+                <div id="hasRead">
+                </div>
             </div>
-            <button>Submit</button>
+            <div class="container">
+                <h2>Yang belum dibaca</h2>
+                <div id="hasntRead">
+                </div>
+            </div>
+    
         </div>
-
-        <div class="container">
-            <h2>Yang sudah dibaca</h2>
-            <div id="hasRead">
-            </div>
-        </div>
-        <div class="container">
-            <h2>Yang belum dibaca</h2>
-            <div id="hasntRead">
-            </div>
-        </div>
-
     </div>
 </body>
 
