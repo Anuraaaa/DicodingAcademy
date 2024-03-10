@@ -10,6 +10,8 @@
     --font-size-item-date: 12px;
     --font-size-item-title-mobile: 12px;
     --font-size-item-date-mobile: 8px;
+    --font-size-toast: 18px;
+    --font-size-toast-mobile: 10px;
 }
 
 *, html, body {
@@ -163,7 +165,7 @@ header > h1 {
     z-index: 1;
     right: 2.5%;
     bottom: 30px;
-    font-size: var(--font-size);
+    font-size: var(--font-size-toast);
 }
   
 #toast.show-toast {
@@ -227,7 +229,7 @@ header > h1 {
     }    
 
     #toast {
-        font-size: var(--font-size-mobile);
+        font-size: var(--font-size-toast-mobile);
     }
 
     header > h1 {

@@ -10,13 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
     submitForm.addEventListener('submit', function (event) {
         event.preventDefault();
         const book = document.getElementById('title');
-        const date = document.getElementById('date');
+        const year = document.getElementById('date');
+        const author = document.getElementById('author');
         
         if (book.value == "") {
-            createCustomEvent("Nama buku tidak boleh kosong!");            
+            createCustomEvent("Judul buku tidak boleh kosong!");            
         }
-        else if (date.value == "") {
-            createCustomEvent("Tanggal tidak boleh kosong!");            
+        else if (author.value == "") {
+            createCustomEvent("Nama pembuat buku tidak boleh kosong!");            
+        }
+        else if (year.value == "") {
+            createCustomEvent("Tahun rilis tidak boleh kosong!");            
         }
         else {
             addBook();
@@ -28,18 +32,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-    const uncompletedTODOList = document.getElementById('hasntRead');
-    uncompletedTODOList.innerHTML = '';
+    const unreadBookList = document.getElementById('hasntRead');
+    unreadBookList.innerHTML = '';
 
-    const completedTODOList = document.getElementById('hasRead');
-    completedTODOList.innerHTML = '';
+    const readBookList = document.getElementById('hasRead');
+    readBookList.innerHTML = '';
 
     for (const bookItem of books) {
         const bookElement = makeBook(bookItem);
-        if (!bookItem.hasRead)
-            uncompletedTODOList.append(bookElement);
+        if (!bookItem.isComplete)
+            unreadBookList.append(bookElement);
         else
-            completedTODOList.append(bookElement);
+            readBookList.append(bookElement);
     }
 });
 
@@ -53,11 +57,14 @@ document.addEventListener(SAVED_EVENT, function (event) {
 
 
 function addBook() {
-    const textBook = document.getElementById('title').value;
-    const timestamp = document.getElementById('date').value;
-
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const dateInput = document.getElementById('date').value;
+    const date = new Date(dateInput);
+    const year = date.getFullYear();
     const generatedID = generateId();
-    const bookObject = generateBookObject(generatedID, textBook, timestamp, false);
+
+    const bookObject = generateBookObject(generatedID, title, author, year, false);
     books.push(bookObject);
 
     document.dispatchEvent(new Event(RENDER_EVENT));
@@ -68,21 +75,22 @@ function generateId() {
     return +new Date();
 }
 
-function generateBookObject(id, book, timestamp, hasRead) {
+function generateBookObject(id, title, author, year, isComplete) {
     return {
         id,
-        book,
-        timestamp,
-        hasRead
+        title,
+        author,
+        year,
+        isComplete
     }
 }
 
 function makeBook(bookObject) {
     const textTitle = document.createElement('h2');
-    textTitle.innerText = bookObject.book;
+    textTitle.innerText = `Judul: ${bookObject.title}`;
 
     const textTimestamp = document.createElement('p');
-    textTimestamp.innerText = bookObject.timestamp;
+    textTimestamp.innerText = `Tahun terbit: ${bookObject.year}`;
 
     const textContainer = document.createElement('div');
     textContainer.classList.add('inner');
@@ -94,7 +102,7 @@ function makeBook(bookObject) {
     container.setAttribute('id', `book-${bookObject.id}`);
 
 
-    if (bookObject.hasRead) {
+    if (bookObject.isComplete) {
         const undoButton = document.createElement('span');
         undoButton.classList.add('undo-button');
         undoButton.classList.add('material-symbols-outlined');
@@ -124,7 +132,16 @@ function makeBook(bookObject) {
             addBookToCompleted(bookObject.id);
         });
 
-        container.append(checkButton);
+        const trashButton = document.createElement('span');
+        trashButton.classList.add('trash-button');
+        trashButton.classList.add('material-symbols-outlined');
+        trashButton.textContent = 'delete';
+
+        trashButton.addEventListener('click', function () {
+            removeBookFromCompleted(bookObject.id);
+        });
+
+        container.append(checkButton, trashButton);
     }
 
     return container;
@@ -135,7 +152,7 @@ function addBookToCompleted(bookId) {
 
     if (bookTarget == null) return;
 
-    bookTarget.hasRead = true;
+    bookTarget.isComplete = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData("Berhasil menyelesaikan bacaan buku");
 }
@@ -174,7 +191,7 @@ function undoBookFromCompleted(bookId) {
 
     if (bookTarget == null) return;
 
-    bookTarget.hasRead = false;
+    bookTarget.isComplete = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData("Berhasil menambahkan buku belum dibaca");
 }
