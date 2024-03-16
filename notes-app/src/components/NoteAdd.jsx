@@ -3,7 +3,7 @@ import React from "react";
 class NoteAdd extends React.Component {
     render() {
         return (
-            <div className="note-container">
+            <form className="note-container" id="form">
                 <h1>Tambah Catatan</h1>
                 <div className="form-group">
                     <label htmlFor="title">Judul</label>
@@ -21,9 +21,9 @@ class NoteAdd extends React.Component {
                     </select>
                 </div>
                 <div className="form-group">
-                    <button>+Tambah</button>
+                    <button id="addBtn">+Tambah</button>
                 </div>
-            </div>
+            </form>
         )
     }
 }
