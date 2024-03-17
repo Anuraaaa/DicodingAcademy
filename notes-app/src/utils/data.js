@@ -10,4 +10,4 @@ const getData = () => {
     ]
 }
 
-export default {getData}
+export {getData}
