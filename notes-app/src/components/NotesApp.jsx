@@ -15,6 +15,7 @@ class NotesApp extends React.Component {
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this);
         this.onArchiveUpdate = this.onArchiveUpdate.bind(this);
+        this.onSearchNote = this.onSearchNote.bind(this);
     }
 
     onDeleteNoteHandler(id) {
@@ -50,13 +51,24 @@ class NotesApp extends React.Component {
         }))
     }
 
+    onSearchNote(query) {
+        this.setState({searchQuery: query});
+    }
+
     render() {
+
+        let filterNote = this.state.notes;
+        
+        if (this.state.searchQuery !== undefined) {
+            filterNote = this.state.notes.filter(note => note.title.toLowerCase().includes(this.state.searchQuery));
+        }
+
         return (
             <div className="container">
                 <h1>Notes App</h1>
                 <NoteAdd addNote={this.onAddNoteHandler}/>
-                <NoteSearch notes={this.state.notes}/>
-                <NoteItem notes={this.state.notes} onArchive={this.onArchiveUpdate} onDelete={this.onDeleteNoteHandler}/>
+                <NoteSearch notes={filterNote} onSearch={this.onSearchNote}/>
+                <NoteItem notes={filterNote} onArchive={this.onArchiveUpdate} onDelete={this.onDeleteNoteHandler}/>
             </div>
         );
     }
