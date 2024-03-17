@@ -7,7 +7,7 @@ class NoteAdd extends React.Component {
         this.state = {
             title: '',
             body: '',
-            archived: ''
+            archived: true
         }
 
         this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
@@ -59,7 +59,7 @@ class NoteAdd extends React.Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="archive">Archive</label>
-                    <select name="archive" id="archive" defaultValue={this.state.archive} onChange={this.onArchiveChangeEventHandler}>
+                    <select name="archive" id="archive" defaultValue={this.state.archived} onChange={this.onArchiveChangeEventHandler}>
                         <option value={"Yes"}>Yes</option>
                         <option value={"No"}>No</option>
                     </select>

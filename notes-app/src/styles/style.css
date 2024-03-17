@@ -93,6 +93,7 @@ body {
     justify-content: center;
     flex-direction: column;
     gap: 16px;
+    min-width: 50%;
 }
 
 .note-item > h1 {
@@ -177,4 +178,12 @@ body {
     .note-item > h1 {
         font-size: var(--font-container-size-mobile);
     }
+
+    .note-item-group {
+        flex-direction: column;
+    }
+
+    .note-item {
+        min-width: 100%;
+    }    
 }
