@@ -3,6 +3,7 @@ import NoteAdd from "./NoteAdd";
 import NoteItem from "./NoteItem";
 import NoteSearch from "./NoteSearch";
 import { getData } from "../utils/data.js";
+import { isValidToast, deleteToast, createToast } from "../utils/NoteToast.js";
 
 class NotesApp extends React.Component {
 
@@ -21,6 +22,11 @@ class NotesApp extends React.Component {
     onDeleteNoteHandler(id) {
         const notes = this.state.notes.filter(note => note.id !== id);
         this.setState({ notes });   
+
+        if (isValidToast()) {
+            deleteToast();
+        }
+        createToast("Berhasil menghapus note");
     }
 
     onAddNoteHandler({title, body, archived}) {
@@ -38,6 +44,10 @@ class NotesApp extends React.Component {
                 ]
             }
         })
+        if (isValidToast()) {
+            deleteToast();
+        }
+        createToast("Berhasil menambahkan note");
     }
 
     onArchiveUpdate(id) {
@@ -49,6 +59,10 @@ class NotesApp extends React.Component {
                 return note;
             })
         }))
+        if (isValidToast()) {
+            deleteToast();
+        }
+        createToast("Berhasil mengupadate note");
     }
 
     onSearchNote(query) {
@@ -58,13 +72,13 @@ class NotesApp extends React.Component {
     render() {
 
         let filterNote = this.state.notes;
-        
+
         if (this.state.searchQuery !== undefined) {
             filterNote = this.state.notes.filter(note => note.title.toLowerCase().includes(this.state.searchQuery));
         }
 
         return (
-            <div className="container">
+            <div className="container" id="container">
                 <h1>Notes App</h1>
                 <NoteAdd addNote={this.onAddNoteHandler}/>
                 <NoteSearch notes={filterNote} onSearch={this.onSearchNote}/>
