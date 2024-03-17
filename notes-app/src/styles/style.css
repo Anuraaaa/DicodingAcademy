@@ -75,10 +75,19 @@ body {
     font-size: var(--font-form-size);
 }
 
-.form-group > input, .form-group > select {
+.form-group > input, .form-group > select, .form-group > textarea {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+.form-group > textarea {
+    resize: none;
+}
+
+.form-group > p {
+    font-size: 12px;
+    align-self: end;
 }
 
 .note-item-group {
@@ -142,8 +151,8 @@ body {
 
 #toast {
     visibility: hidden;
-    background-color: #265073;
-    color: #fff;
+    /* background-color: #265073; */
+    /* color: #fff; */
     text-align: center;
     border-radius: 5px;
     padding: 16px;

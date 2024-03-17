@@ -3,7 +3,7 @@ import NoteAdd from "./NoteAdd";
 import NoteItem from "./NoteItem";
 import NoteSearch from "./NoteSearch";
 import { getData } from "../utils/data.js";
-import { isValidToast, deleteToast, createToast } from "../utils/NoteToast.js";
+import { showToast } from "../utils/NoteToast.js";
 
 class NotesApp extends React.Component {
 
@@ -23,13 +23,23 @@ class NotesApp extends React.Component {
         const notes = this.state.notes.filter(note => note.id !== id);
         this.setState({ notes });   
 
-        if (isValidToast()) {
-            deleteToast();
-        }
-        createToast("Berhasil menghapus note");
+        showToast("Berhasil menghapus note", "black", "rgb(0, 204, 255)");
     }
 
     onAddNoteHandler({title, body, archived}) {
+
+        if (title.length == 0)
+            return showToast("Judul tidak bisa kosong!", "white", "red");    
+
+        if (title.length > 50)
+            return showToast("Judul maksimal 50 karakter!", "white", "red");    
+        
+        if (body.length == 0)
+            return showToast("Deskripsi tidak bisa kosong!", "white", "red");    
+    
+        if (body.length > 500)
+            return showToast("Deskripsi maksimal 500 karakter!", "white", "red");    
+    
         this.setState((prev) => {
             return {
                 notes: [
@@ -44,10 +54,7 @@ class NotesApp extends React.Component {
                 ]
             }
         })
-        if (isValidToast()) {
-            deleteToast();
-        }
-        createToast("Berhasil menambahkan note");
+        showToast("Berhasil menambahkan note", "black", "rgb(0, 204, 255)");
     }
 
     onArchiveUpdate(id) {
@@ -59,10 +66,7 @@ class NotesApp extends React.Component {
                 return note;
             })
         }))
-        if (isValidToast()) {
-            deleteToast();
-        }
-        createToast("Berhasil mengupadate note");
+        showToast("Berhasil mengupdate note", "black", "rgb(0, 204, 255)");
     }
 
     onSearchNote(query) {

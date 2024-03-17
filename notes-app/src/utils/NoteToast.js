@@ -1,12 +1,13 @@
 let activeToast = false;
 let toastTimer = false;
 
-function createToast(message) {
+function createToast(message, color, backgroundColor) {
     
     if (!isValidToast()) {
         const toast = document.createElement('div');
         toast.id = 'toast';
         toast.classList.add('show-toast');
+        toast.style = `color: ${color}; background-color: ${backgroundColor}`
         toast.textContent = message;
         activeToast = true;
         const wrapper = document.getElementById('container');
@@ -36,4 +37,12 @@ function isValidToast() {
     return false;
 }
 
-export {isValidToast, deleteToast, createToast};
+function showToast(message, color, backgroundColor) {
+
+    if (isValidToast()) {
+        deleteToast();
+    }
+    createToast(message, color, backgroundColor);
+}
+
+export {showToast};

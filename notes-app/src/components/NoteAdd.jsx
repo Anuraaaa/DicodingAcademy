@@ -52,10 +52,12 @@ class NoteAdd extends React.Component {
                 <div className="form-group">
                     <label htmlFor="title">Judul</label>
                     <input type="text" id="title" placeholder="Masukkan judul catatan" value={this.state.title} onChange={this.onTitleChangeEventHandler}/>
+                    <p>{this.state.title.length}/50</p>
                 </div>
                 <div className="form-group">
                     <label htmlFor="body">Deskripsi</label>
-                    <input type="text" id="body" placeholder="Masukkan deskripsi catatan" value={this.state.body} onChange={this.onBodyChangeEventHandler}/>
+                    <textarea id="body" cols="30" rows="10" placeholder="Masukkan deskripsi catatan" value={this.state.body} onChange={this.onBodyChangeEventHandler}></textarea>
+                    <p>{this.state.body.length}/500</p>
                 </div>
                 <div className="form-group">
                     <label htmlFor="archive">Archive</label>
