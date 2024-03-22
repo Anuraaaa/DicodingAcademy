@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import NoteAdd from "./NoteAdd";
 import NoteItem from "./NoteItem";
 import NoteSearch from "./NoteSearch";
@@ -91,5 +92,17 @@ class NotesApp extends React.Component {
         );
     }
 }
+
+NoteItem.propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        body: PropTypes.string.isRequired,
+        archived: PropTypes.bool.isRequired,
+        createdAt: PropTypes.string.isRequired,
+    })).isRequired,
+    onArchive: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+};
 
 export default NotesApp;

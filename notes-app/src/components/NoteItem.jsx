@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import NoteList from "./NoteList";
 
 class NoteItem extends React.Component {
@@ -49,6 +50,20 @@ class NoteItem extends React.Component {
             </div>
         );
     }
+}
+
+NoteItem.propTypes = {
+    notes: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+            body: PropTypes.string.isRequired,
+            archived: PropTypes.bool.isRequired,
+            createdAt: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    onArchive: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,    
 }
 
 export default NoteItem;

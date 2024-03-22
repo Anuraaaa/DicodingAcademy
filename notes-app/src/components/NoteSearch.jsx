@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class NoteSearch extends React.Component {
     constructor(props) {
@@ -21,6 +22,10 @@ class NoteSearch extends React.Component {
             </div>
         )
     }
+}
+
+NoteSearch.propTypes = {
+    onSearch: PropTypes.func.isRequired,
 }
 
 export default NoteSearch;
