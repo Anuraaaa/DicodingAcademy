@@ -5,6 +5,7 @@ import NoteItem from "./NoteItem";
 import NoteSearch from "./NoteSearch";
 import { getData } from "../utils/data.js";
 import { showToast } from "../utils/NoteToast.js";
+import Navbar from "./Navbar.jsx";
 
 class NotesApp extends React.Component {
 
@@ -84,7 +85,7 @@ class NotesApp extends React.Component {
 
         return (
             <div className="container" id="container">
-                <h1>Notes App</h1>
+                <Navbar/>
                 <NoteAdd addNote={this.onAddNoteHandler}/>
                 <NoteSearch notes={filterNote} onSearch={this.onSearchNote}/>
                 <NoteItem notes={filterNote} onArchive={this.onArchiveUpdate} onDelete={this.onDeleteNoteHandler}/>

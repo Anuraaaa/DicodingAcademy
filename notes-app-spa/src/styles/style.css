@@ -7,9 +7,9 @@
     --font-form-size: 18px;
     --font-form-size-mobile: 14px;
     --font-content-title-size: 16px;
-    --font-content-content-size: 12px;
+    --font-content-size: 12px;
     --font-content-title-size-mobile: 12px;
-    --font-content-content-size-mobile: 8px;
+    --font-content-size-mobile: 8px;
     --font-size-toast: 18px;
     --font-size-toast-mobile: 10px;
     --background-primary-color: whitesmoke;
@@ -124,7 +124,7 @@ body {
 }
 
 .note-list > p {
-    font-size: var(--font-content-content-size);
+    font-size: var(--font-content-size);
 }
 
 .note-list-group {
@@ -147,6 +147,38 @@ body {
 .note-list-group > .delete:hover {
     cursor: pointer;
     background-color: red;
+}
+
+.navbar {
+    background-color: var(--background-secondary-color);
+    border-radius: 5px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.navbar > h1 {
+    font-size: var(--font-container-size);
+}
+
+.navbar > ul {
+    display: flex;
+    gap: 12px;
+}
+
+.navbar > ul > li {
+    list-style: none;
+    font-size: var(--font-content-title-size);
+}
+
+.navbar > ul > li > a {
+    color: black;
+    text-decoration: none;
+}
+
+.navbar > ul > li > a:hover {
+    cursor: pointer;
 }
 
 #toast {
@@ -223,7 +255,7 @@ body {
     }
     
     .note-list > p {
-        font-size: var(--font-content-content-size-mobile);
+        font-size: var(--font-content-size-mobile);
     }    
 
     .note-item > h1 {
@@ -241,4 +273,13 @@ body {
     #toast {
         font-size: var(--font-size-toast-mobile);
     }
+
+    .navbar > h1 {
+        font-size: var(--font-container-size-mobile);
+    }
+    
+    .navbar > ul > li {
+        list-style: none;
+        font-size: var(--font-content-size);
+    }    
 }
