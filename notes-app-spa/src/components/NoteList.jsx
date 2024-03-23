@@ -10,6 +10,7 @@ class NoteList extends React.Component {
         return (
             <div className="note-list">
                 <h1>{this.props.title}</h1>
+                <p>{new Date(this.props.createdAt).toLocaleString()}</p>
                 <p>{this.props.body}</p>
                 <div className="note-list-group">
                     <button className="material-symbols-outlined" id="archiveBtn" onClick={() => this.props.onArchive(this.props.id)}>{this.props.archived? 'unarchive' : 'archive'}</button>
