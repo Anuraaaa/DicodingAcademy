@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import NoteItem from "../components/NoteItem.jsx";
 import NoteSearch from "../components/NoteSearch.jsx";
 
@@ -25,9 +26,6 @@ class Homepage extends React.Component {
         if (prevProps.notes !== this.props.notes) {
             this.setState({ notes: this.props.notes });
         }
-        if (prevProps.onSearchNote !== this.props.onSearchNote) {
-            this.setState({ notes: this.props.searchQuery });
-        }
     }
     
     render() {
@@ -43,6 +41,20 @@ class Homepage extends React.Component {
             </div>
         )
     } 
+}
+
+Homepage.propTypes = {
+    notes: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+            body: PropTypes.string.isRequired,
+            archived: PropTypes.bool.isRequired,
+            createdAt: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    onArchiveUpdate: PropTypes.func.isRequired,
+    onDeleteNoteHandler: PropTypes.func.isRequired
 }
 
 export default Homepage;

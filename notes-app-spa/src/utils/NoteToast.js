@@ -45,4 +45,4 @@ function showToast(message, color, backgroundColor) {
     createToast(message, color, backgroundColor);
 }
 
-export {showToast};
+export { showToast };

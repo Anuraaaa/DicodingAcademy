@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import NoteAdd from "../components/NoteAdd.jsx";
 
 class AddNotepage extends React.Component {
@@ -19,5 +20,9 @@ class AddNotepage extends React.Component {
         )
     }
 }
+
+AddNotepage.propTypes = {
+    addNote: PropTypes.func.isRequired
+};
 
 export default AddNotepage;
