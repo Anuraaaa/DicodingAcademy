@@ -5,14 +5,7 @@ import NoteSearch from "../components/NoteSearch.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Homepage({notes, onArchiveUpdate, onDeleteNoteHandler}) {
-    
-    
-    // componentDidUpdate(prevProps) {
-    //     if (prevProps.notes !== this.props.notes) {
-    //         this.setState({ notes: this.props.notes });
-    //     }
-    // }
-    
+        
     let searchQuery = undefined;
     const navigate = useNavigate();
 
