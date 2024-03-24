@@ -6,6 +6,7 @@ import AddNotepage from "../pages/AddNotepage.jsx";
 import { getData } from "../utils/data.js";
 import { showToast } from "../utils/NoteToast.js";
 import Detailpage from "../pages/Detailpage.jsx";
+import Notfoundpage from "../pages/Notfoundpage.jsx";
 
 class NotesApp extends React.Component {
 
@@ -80,6 +81,7 @@ class NotesApp extends React.Component {
                         <Route path="/" element={<Homepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
                         <Route path="/notes/new" element={<AddNotepage addNote={this.onAddNoteHandler}/>}/>
                         <Route path="/notes/detail/:id" element={<Detailpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                        <Route path="*" element={<Notfoundpage/>}/>
                     </Routes>
                 </BrowserRouter>
             </div>

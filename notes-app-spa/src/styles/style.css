@@ -258,6 +258,10 @@ body {
     .note-container > h1 {
         font-size: var(--font-container-size-mobile);
     }
+
+    .note-container > p {
+        font-size: var(--font-content-size);
+    }
     
     .form-group {
         display: flex;
