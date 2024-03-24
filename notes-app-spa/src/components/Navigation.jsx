@@ -7,7 +7,7 @@ function Navigation() {
             <h1>Notes App</h1>
             <ul className="navbar-list">
                 <li><Link to={"/"}>Home</Link></li>
-                <li><Link to={"/add"}>Tambah</Link></li>
+                <li><Link to={"/notes/new"}>New</Link></li>
             </ul>
         </div>
     )

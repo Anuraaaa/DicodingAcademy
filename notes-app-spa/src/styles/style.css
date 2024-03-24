@@ -33,6 +33,8 @@ body {
     display: flex;
     flex-direction: column;
     padding: 16px;
+    border: 1px dashed grey;
+    min-height: 100vh;
 }
 
 .note-container {
@@ -49,6 +51,27 @@ body {
 
 .note-container > h1 {
     font-size: var(--font-container-size);
+}
+
+.note-container-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin: 1rem 0;
+    padding: 2rem 0;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #cdcccc;
+    background-color: #faf9f9;
+}
+
+.note-container-detail > h1 {
+    font-size: var(--font-container-size);
+}
+
+.note-container-detail > p {
+    font-size: var(--font-container-size-mobile);
+    padding: 0px 24px;
 }
 
 .note-container > div > button {
@@ -95,7 +118,7 @@ body {
     flex-direction: row;
     align-items: start;
     justify-content: center;
-    margin: 4rem 0;
+    margin: 4rem 2rem;
     gap: 2rem;
 }
 
@@ -105,6 +128,11 @@ body {
     flex-direction: column;
     gap: 16px;
     min-width: 50%;
+}
+
+.note-item a {
+    color: black;
+    text-decoration: none;
 }
 
 .note-item > h1 {
@@ -281,5 +309,14 @@ body {
     .navbar > ul > li {
         list-style: none;
         font-size: var(--font-content-size);
+    }    
+
+    .note-container-detail > h1 {
+        font-size: var(--font-content-title-size);
+    }
+    
+    .note-container-detail > p {
+        font-size: var(--font-content-size);
+        padding: 0px 24px;
     }    
 }

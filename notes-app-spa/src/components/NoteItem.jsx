@@ -25,7 +25,7 @@ class NoteItem extends React.Component {
                             ))}
                     {!this.props.notes ||
                         (!this.props.notes.some((note) => note.archived === true) && (
-                            <p>There are no data notes</p>
+                            <p>Tidak ada catatan</p>
                         ))}
                 </div>
                 <div className="note-item">
@@ -44,7 +44,7 @@ class NoteItem extends React.Component {
                             ))}
                     {!this.props.notes ||
                         (!this.props.notes.some((note) => note.archived === false) && (
-                            <p>There are no data notes</p>
+                            <p>Tidak ada catatan</p>
                         ))}
                 </div>
             </div>
