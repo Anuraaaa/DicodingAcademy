@@ -2,18 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useSearchParams } from "react-router-dom";
 import NoteItem from "../components/NoteItem";
+import Notfoundpage from "./Notfoundpage";
 
 function Detailsearchpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
 
     const [search, setSearch] = useSearchParams();
     const title = search.get("title");
-    const searchNote = notes.filter(note => note.title.toLowerCase().includes(title.toLowerCase()));
-
-    return (
-        <div>
-            <NoteItem notes={searchNote} onArchive={onArchiveUpdate} onDelete={onDeleteNoteHandler}/>
-        </div>
-    )
+    if (title) {
+        const searchNote = notes.filter(note => note.title.toLowerCase().includes(title.toLowerCase()));
+        return (
+            <div>
+                <NoteItem notes={searchNote} onArchive={onArchiveUpdate} onDelete={onDeleteNoteHandler}/>
+            </div>
+        )
+    } else {
+        return <Notfoundpage message={"Title query parameter not found"}/>
+    }
 }
 
 Detailsearchpage.propTypes = {
