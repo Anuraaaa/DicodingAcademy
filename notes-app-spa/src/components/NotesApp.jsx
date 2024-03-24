@@ -42,7 +42,7 @@ class NotesApp extends React.Component {
                 notes: [
                     ...prev.notes,
                     {
-                        id: +new Date(),
+                        id: `notes-${+new Date()}`,
                         title,
                         body,
                         archived: archived,

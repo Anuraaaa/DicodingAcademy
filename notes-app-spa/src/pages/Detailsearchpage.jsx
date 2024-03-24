@@ -19,7 +19,7 @@ function Detailsearchpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
 Detailsearchpage.propTypes = {
     notes: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            id: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired,
             body: PropTypes.string.isRequired,
             archived: PropTypes.bool.isRequired,
