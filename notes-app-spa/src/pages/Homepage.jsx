@@ -2,45 +2,39 @@ import React from "react";
 import PropTypes from "prop-types";
 import NoteItem from "../components/NoteItem.jsx";
 import NoteSearch from "../components/NoteSearch.jsx";
+import { useNavigate } from "react-router-dom";
 
-class Homepage extends React.Component {
+function Homepage({notes, onArchiveUpdate, onDeleteNoteHandler}) {
+    
+    
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.notes !== this.props.notes) {
+    //         this.setState({ notes: this.props.notes });
+    //     }
+    // }
+    
+    let searchQuery = undefined;
+    const navigate = useNavigate();
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            notes: this.props.notes,
-            onArchiveUpdate: this.props.onArchiveUpdate,
-            onDeleteNoteHandler: this.props.onDeleteNoteHandler,
-            searchQuery: undefined
-        }
-
-        this.onSearchNote = this.onSearchNote.bind(this);
+    function onClickSearch(searchQuery) {
+        navigate(`/notes/search?title=${searchQuery}`);
     }
 
-    onSearchNote(query) {
-        this.setState({searchQuery: query});
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.notes !== this.props.notes) {
-            this.setState({ notes: this.props.notes });
-        }
+    function onSearchNote(query) {
+        searchQuery = query;
     }
     
-    render() {
-        let filterNote = this.state.notes;
-        if (this.state.searchQuery !== undefined) {
-            filterNote = this.state.notes.filter(note => note.title.toLowerCase().includes(this.state.searchQuery));
-        }
+    let filterNote = notes;
+    if (searchQuery !== undefined) {
+        filterNote = notes.filter(note => note.title.toLowerCase().includes(searchQuery));
+    }
 
-        return (
-            <div>
-                <NoteSearch notes={filterNote} onSearch={this.onSearchNote}/>
-                <NoteItem notes={filterNote} onArchive={this.state.onArchiveUpdate} onDelete={this.state.onDeleteNoteHandler}/>
-            </div>
-        )
-    } 
+    return (
+        <div>
+            <NoteSearch notes={filterNote} onSearch={onSearchNote} onClickSearch={onClickSearch}/>
+            <NoteItem notes={filterNote} onArchive={onArchiveUpdate} onDelete={onDeleteNoteHandler}/>
+        </div>
+    )
 }
 
 Homepage.propTypes = {
