@@ -5,47 +5,57 @@ import NoteList from "./NoteList";
 class NoteItem extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            notes: this.props.notes
+        }
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.notes !== this.props.notes) {
+            this.setState({
+                notes: this.props.notes
+            }); 
+        }       
+    }
+
     render() {
+        const activeNote = this.state.notes.filter(note => note.archived === false);
+        const archiveNote = this.state.notes.filter(note => note.archived === true);
+
         return (
             <div className="note-item-group">
                 <div className="note-item">
-                    <h1>Archive</h1>
-                    {this.props.notes &&
-                        this.props.notes
-                            .filter((note) => note.archived === true)
-                            .map((note) => (
-                                <NoteList
-                                    key={note.id}
-                                    id={note.id}
-                                    onArchive={this.props.onArchive}
-                                    onDelete={this.props.onDelete}
-                                    {...note}
-                                />
-                            ))}
-                    {!this.props.notes ||
-                        (!this.props.notes.some((note) => note.archived === true) && (
-                            <p>Tidak ada catatan</p>
-                        ))}
+                    <h1>Active</h1>
+                    {activeNote && activeNote.length > 0 ? (
+                        activeNote.map((note) => (
+                            <NoteList
+                                key={note.id}
+                                id={note.id}
+                                onArchive={this.props.onArchive}
+                                onDelete={this.props.onDelete}
+                                {...note}
+                            />
+                        ))
+                    ) : (
+                        <p>Tidak ada catatan</p>
+                    )}
                 </div>
                 <div className="note-item">
-                    <h1>No Archive</h1>
-                    {this.props.notes &&
-                        this.props.notes
-                            .filter((note) => note.archived === false)
-                            .map((note) => (
-                                <NoteList
-                                    key={note.id}
-                                    id={note.id}
-                                    onArchive={this.props.onArchive}
-                                    onDelete={this.props.onDelete}
-                                    {...note}
-                                />
-                            ))}
-                    {!this.props.notes ||
-                        (!this.props.notes.some((note) => note.archived === false) && (
-                            <p>Tidak ada catatan</p>
-                        ))}
+                    <h1>Archive</h1>
+                    {archiveNote && archiveNote.length > 0 ? (
+                        archiveNote.map((note) => (
+                            <NoteList
+                                key={note.id}
+                                id={note.id}
+                                onArchive={this.props.onArchive}
+                                onDelete={this.props.onDelete}
+                                {...note}
+                            />
+                        ))
+                    ) : (
+                        <p>Tidak ada catatan</p>
+                    )}
                 </div>
             </div>
         );
