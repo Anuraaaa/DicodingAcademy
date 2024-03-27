@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { formatDate } from "../utils/formatter";
+import { showFormattedDate } from "../utils";
 
 class NoteList extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class NoteList extends React.Component {
         return (
             <div className="note-list">
                 <h1><Link to={`/notes/detail/${this.state.id}`}>{this.state.title}</Link></h1>
-                <p><Link to={`/notes/detail/${this.state.id}`}>{formatDate(this.state.createdAt)}</Link></p>
+                <p><Link to={`/notes/detail/${this.state.id}`}>{showFormattedDate(this.state.createdAt)}</Link></p>
                 <p><Link to={`/notes/detail/${this.state.id}`}>{this.state.body}</Link></p>
                 <div className="note-list-group">
                     <button className="material-symbols-outlined" id="archiveBtn" onClick={() => this.state.onArchive(this.state.id)}>{this.state.archived? 'unarchive' : 'archive'}</button>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import NoteItem from "../components/NoteItem";
-import { formatDate } from "../utils/formatter";
+import { showFormattedDate } from "../utils";
 
 function Detailpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
 
@@ -16,7 +16,7 @@ function Detailpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
                     return (
                         <div key={i} className="note-container-detail">
                             <h1>{note.title}</h1>
-                            <p>{formatDate(note.createdAt)}</p>
+                            <p>{showFormattedDate(note.createdAt)}</p>
                             <p>{note.archived? "Archive" : "Active"}</p>
                             <p>{note.body}</p>
                         </div>

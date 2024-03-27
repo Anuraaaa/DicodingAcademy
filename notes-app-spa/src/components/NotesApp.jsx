@@ -3,11 +3,11 @@ import Navigation from "./Navigation.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "../pages/Homepage.jsx";
 import AddNotepage from "../pages/AddNotepage.jsx";
-import { getData } from "../utils/data.js";
 import { showToast } from "../utils/NoteToast.js";
 import Detailpage from "../pages/Detailpage.jsx";
 import Notfoundpage from "../pages/Notfoundpage.jsx";
 import Detailsearchpage from "../pages/Detailsearchpage.jsx";
+import { getAllNotes } from "../utils/local-data.js";
 
 class NotesApp extends React.Component {
 
@@ -15,7 +15,7 @@ class NotesApp extends React.Component {
         super(props);
 
         this.state = {
-            notes: getData()
+            notes: getAllNotes()
         }
 
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
@@ -83,7 +83,7 @@ class NotesApp extends React.Component {
                         <Route path="/notes/new" element={<AddNotepage addNote={this.onAddNoteHandler}/>}/>
                         <Route path="/notes/detail/:id" element={<Detailpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
                         <Route path="/notes/search" element={<Detailsearchpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                        <Route path="*" element={<Notfoundpage/>}/>
+                        <Route path="*" element={<Notfoundpage message={""}/>}/>
                     </Routes>
                 </BrowserRouter>
             </div>
