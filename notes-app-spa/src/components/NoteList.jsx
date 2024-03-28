@@ -38,6 +38,7 @@ NoteList.propTypes =  {
     body: PropTypes.string.isRequired,
     archived: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
     onArchive: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
 }
