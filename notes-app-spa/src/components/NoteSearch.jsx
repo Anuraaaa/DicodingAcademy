@@ -53,6 +53,7 @@ NoteSearch.propTypes = {
         createdAt: PropTypes.string.isRequired,
     })).isRequired,
     onSearch: PropTypes.func.isRequired,
+    onClickSearch: PropTypes.func.isRequired
 }
 
 export default NoteSearch;
