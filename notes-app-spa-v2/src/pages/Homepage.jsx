@@ -5,7 +5,7 @@ import NoteSearch from "../components/NoteSearch.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Homepage({notes, onArchiveUpdate, onDeleteNoteHandler}) {
-        
+    
     let searchQuery = undefined;
     const navigate = useNavigate();
 
@@ -17,9 +17,9 @@ function Homepage({notes, onArchiveUpdate, onDeleteNoteHandler}) {
         searchQuery = query;
     }
     
-    let filterNote = notes;
+    let filterNote = notes.data;
     if (searchQuery !== undefined) {
-        filterNote = notes.filter(note => note.title.toLowerCase().includes(searchQuery));
+        filterNote = notes.data.filter(note => note.title.toLowerCase().includes(searchQuery));
     }
 
     return (
@@ -31,15 +31,17 @@ function Homepage({notes, onArchiveUpdate, onDeleteNoteHandler}) {
 }
 
 Homepage.propTypes = {
-    notes: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            body: PropTypes.string.isRequired,
-            archived: PropTypes.bool.isRequired,
-            createdAt: PropTypes.string.isRequired,
-        })
-    ).isRequired,
+    notes: PropTypes.shape({
+        data: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                title: PropTypes.string.isRequired,
+                body: PropTypes.string.isRequired,
+                archived: PropTypes.bool.isRequired,
+                createdAt: PropTypes.string.isRequired
+            })
+        )
+    }),    
     onArchiveUpdate: PropTypes.func.isRequired,
     onDeleteNoteHandler: PropTypes.func.isRequired
 }

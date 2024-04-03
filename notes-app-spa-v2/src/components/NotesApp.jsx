@@ -7,10 +7,9 @@ import { showToast } from "../utils/NoteToast.js";
 import Detailpage from "../pages/Detailpage.jsx";
 import Notfoundpage from "../pages/Notfoundpage.jsx";
 import Detailsearchpage from "../pages/Detailsearchpage.jsx";
-import { getAllNotes } from "../utils/local-data.js";
 import Archivepage from "../pages/Archivepage.jsx";
 import Registerpage from "../pages/Registerpage.jsx";
-import { getUserLogged, putAccessToken } from "../utils/network-data.js";
+import { addNote, archiveNote, deleteNote, getActiveNotes, getArchivedNotes, getNote, getUserLogged, putAccessToken, unarchiveNote } from "../utils/network-data.js";
 import Loginpage from "../pages/Loginpage.jsx";
 
 class NotesApp extends React.Component {
@@ -19,7 +18,7 @@ class NotesApp extends React.Component {
         super(props);
 
         this.state = {
-            notes: getAllNotes(),
+            notes: null,
             authedUser: null,
             initializing: true
         }
@@ -31,7 +30,7 @@ class NotesApp extends React.Component {
         this.onLogout = this.onLogout.bind(this);
     }
 
-    onAddNoteHandler({title, body, archived}) {
+    async onAddNoteHandler({title, body, archived}) {
 
         if (title.length == 0)
             return showToast("Judul tidak bisa kosong!", "white", "red");    
@@ -45,40 +44,84 @@ class NotesApp extends React.Component {
         if (body.length > 500)
             return showToast("Deskripsi maksimal 500 karakter!", "white", "red");    
 
-        this.setState((prev) => {
-            return {
-                notes: [
-                    ...prev.notes,
-                    {
-                        id: `notes-${+new Date()}`,
-                        title,
-                        body,
-                        archived: archived,
-                        createdAt: new Date().toISOString()
-                    }
-                ]
-            }
-        })
-        showToast("Berhasil menambahkan note", "black", "rgb(0, 204, 255)");
+        const response = await addNote({
+            title: title,
+            body: body
+        });
+
+        if (!response.error) {
+            const newNote = {
+                id: `notes-${+new Date()}`,
+                title,
+                body,
+                archived: archived,
+                createdAt: new Date().toISOString()
+            };
+    
+            this.setState(prevState => ({
+                notes: {
+                    ...prevState.notes,
+                    data: [...prevState.notes.data, newNote]
+                }
+            }));
+            showToast("Berhasil menambahkan note", "black", "rgb(0, 204, 255)");
+        }
+        else {            
+            showToast("Gagal menambahkan note", "white", "red");
+        }
     }
     
-    onDeleteNoteHandler(id) {
-        const notes = this.state.notes.filter(note => note.id !== id);
-        this.setState({ notes });   
+    async onDeleteNoteHandler(id) {
+        const note = await getNote(id);
 
-        showToast("Berhasil menghapus note", "black", "rgb(0, 204, 255)");
+        if (note.error) {
+            showToast("Gagal mengupdate note", "white", "red");
+            return;
+        }
+
+        const response = await deleteNote(id);
+        if (!response.error) {
+            const updatedNotes = this.state.notes.data.filter(note => note.id !== id);
+        
+            this.setState(prevState => ({
+                notes: { ...prevState.notes, data: updatedNotes }
+            }));    
+
+            showToast("Berhasil menghapus note", "black", "rgb(0, 204, 255)");
+        }
+        else {            
+            showToast("Gagal menghapus note", "white", "red");
+        }
     }
 
-    onArchiveUpdate(id) {
-        this.setState((prev) => ({
-            notes: prev.notes.map(note => {
+    async onArchiveUpdate(id) {
+        const note = await getNote(id);
+
+        if (note.error) {
+            showToast("Gagal mengupdate note", "white", "red");
+            return;
+        }
+
+        const response = note.data.archived
+        ? await unarchiveNote(id)
+        : await archiveNote(id);
+
+        if (!response.error) {
+            const updatedNotes = this.state.notes.data.map(note => {
                 if (note.id === id) {
-                    return {...note, archived: !note.archived};
+                    return { ...note, archived: !note.archived };
                 }
                 return note;
-            })
-        }))
-        showToast("Berhasil mengupdate note", "black", "rgb(0, 204, 255)");
+            });
+
+            this.setState(prevState => ({
+                notes: { ...prevState.notes, data: updatedNotes }
+            }));
+
+            showToast("Berhasil mengupdate note", "black", "rgb(0, 204, 255)");
+        } else {
+            showToast("Gagal mengupdate note", "white", "red");
+        }
     }
 
     async onLoginSuccess({ accessToken }) {
@@ -104,11 +147,20 @@ class NotesApp extends React.Component {
 
     async componentDidMount() {
         const { data } = await getUserLogged();
+        const activeNote = await getActiveNotes();
+        const archiveNote = await getArchivedNotes();
+        const noteData = {
+            data: [
+              ...activeNote.data,
+              ...archiveNote.data
+            ]
+        };
 
         this.setState(() => {
             return {
                 authedUser: data,
-                initializing: false
+                initializing: false,
+                notes: noteData
             };
         });        
     }
@@ -140,7 +192,7 @@ class NotesApp extends React.Component {
                         <Routes>
                             <Route path="/" element={<Homepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
                             <Route path="/notes/archive" element={<Archivepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                            <Route path="/notes/new" element={<AddNotepage addNote={this.onAddNoteHandler}/>}/>
+                            <Route path="/notes/new" element={<AddNotepage notes={this.state.notes} addNote={this.onAddNoteHandler}/>}/>
                             <Route path="/notes/detail/:id" element={<Detailpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
                             <Route path="/notes/search" element={<Detailsearchpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
                             <Route path="*" element={<Notfoundpage message={""}/>}/>

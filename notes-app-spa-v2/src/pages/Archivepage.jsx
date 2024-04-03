@@ -17,11 +17,11 @@ function Archivepage({notes, onArchiveUpdate, onDeleteNoteHandler}) {
         searchQuery = query;
     }
     
-    let filterNote = notes;
-    filterNote = notes.filter(note => note.archived === true);
+    let filterNote = notes.data;
+    filterNote = notes.data.filter(note => note.archived === true);
 
     if (searchQuery !== undefined) {
-        filterNote = notes.filter(note => note.title.toLowerCase().includes(searchQuery)).filter(note => note.archived === true);
+        filterNote = notes.data.filter(note => note.title.toLowerCase().includes(searchQuery)).filter(note => note.archived === true);
     }
 
     return (
@@ -33,15 +33,17 @@ function Archivepage({notes, onArchiveUpdate, onDeleteNoteHandler}) {
 }
 
 Archivepage.propTypes = {
-    notes: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            body: PropTypes.string.isRequired,
-            archived: PropTypes.bool.isRequired,
-            createdAt: PropTypes.string.isRequired,
-        })
-    ).isRequired,
+    notes: PropTypes.shape({
+        data: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                title: PropTypes.string.isRequired,
+                body: PropTypes.string.isRequired,
+                archived: PropTypes.bool.isRequired,
+                createdAt: PropTypes.string.isRequired
+            })
+        )
+    }),    
     onArchiveUpdate: PropTypes.func.isRequired,
     onDeleteNoteHandler: PropTypes.func.isRequired
 }

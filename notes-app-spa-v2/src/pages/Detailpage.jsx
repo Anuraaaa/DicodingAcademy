@@ -7,8 +7,8 @@ import { showFormattedDate } from "../utils";
 function Detailpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
 
     const { id } = useParams();
-    const noteData = notes.filter(note => note.id == id);
-    const otherData = notes.filter(note => note.id != id);
+    const noteData = notes.data.filter(note => note.id == id);
+    const otherData = notes.data.filter(note => note.id != id);
     return (
         <div>
             {
@@ -29,15 +29,17 @@ function Detailpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
 }
 
 Detailpage.propTypes = {
-    notes: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            body: PropTypes.string.isRequired,
-            archived: PropTypes.bool.isRequired,
-            createdAt: PropTypes.string.isRequired,
-        })
-    ).isRequired,
+    notes: PropTypes.shape({
+        data: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                title: PropTypes.string.isRequired,
+                body: PropTypes.string.isRequired,
+                archived: PropTypes.bool.isRequired,
+                createdAt: PropTypes.string.isRequired
+            })
+        )
+    }),    
     onArchiveUpdate: PropTypes.func.isRequired,
     onDeleteNoteHandler: PropTypes.func.isRequired,    
 }

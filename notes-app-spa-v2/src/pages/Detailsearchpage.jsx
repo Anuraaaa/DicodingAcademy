@@ -21,7 +21,7 @@ function Detailsearchpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
         searchQuery = query;
     }
     
-    let filterNote = notes;
+    let filterNote = notes.data;
     if (searchQuery !== undefined) {
         filterNote = notes.filter(note => note.title.toLowerCase().includes(searchQuery));
     }
@@ -40,15 +40,17 @@ function Detailsearchpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
 }
 
 Detailsearchpage.propTypes = {
-    notes: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            body: PropTypes.string.isRequired,
-            archived: PropTypes.bool.isRequired,
-            createdAt: PropTypes.string.isRequired,
-        })
-    ).isRequired,
+    notes: PropTypes.shape({
+        data: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                title: PropTypes.string.isRequired,
+                body: PropTypes.string.isRequired,
+                archived: PropTypes.bool.isRequired,
+                createdAt: PropTypes.string.isRequired
+            })
+        )
+    }),    
     onArchiveUpdate: PropTypes.func.isRequired,
     onDeleteNoteHandler: PropTypes.func.isRequired,
 }
