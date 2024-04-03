@@ -9,6 +9,9 @@ import Notfoundpage from "../pages/Notfoundpage.jsx";
 import Detailsearchpage from "../pages/Detailsearchpage.jsx";
 import { getAllNotes } from "../utils/local-data.js";
 import Archivepage from "../pages/Archivepage.jsx";
+import Registerpage from "../pages/Registerpage.jsx";
+import { getUserLogged, putAccessToken } from "../utils/network-data.js";
+import Loginpage from "../pages/Loginpage.jsx";
 
 class NotesApp extends React.Component {
 
@@ -16,12 +19,16 @@ class NotesApp extends React.Component {
         super(props);
 
         this.state = {
-            notes: getAllNotes()
+            notes: getAllNotes(),
+            authedUser: null,
+            initializing: true
         }
 
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this);
         this.onArchiveUpdate = this.onArchiveUpdate.bind(this);
+        this.onLoginSuccess = this.onLoginSuccess.bind(this);
+        this.onLogout = this.onLogout.bind(this);
     }
 
     onAddNoteHandler({title, body, archived}) {
@@ -74,22 +81,74 @@ class NotesApp extends React.Component {
         showToast("Berhasil mengupdate note", "black", "rgb(0, 204, 255)");
     }
 
+    async onLoginSuccess({ accessToken }) {
+        putAccessToken(accessToken);
+        const { data } = await getUserLogged();
+
+        this.setState(() => {
+          return {
+            authedUser: data,
+          };
+        });
+    }    
+
+    onLogout() {
+        this.setState(() => {
+            return {
+                authedUser: null
+            }
+        });
+        putAccessToken('');
+        showToast("Berhasil logout", "black", "rgb(0, 204, 255)");
+    }
+
+    async componentDidMount() {
+        const { data } = await getUserLogged();
+
+        this.setState(() => {
+            return {
+                authedUser: data,
+                initializing: false
+            };
+        });        
+    }
+
     render() {
-        return (
-            <div className="container" id="container">
-                <BrowserRouter>
-                    <Navigation/>
-                    <Routes>
-                        <Route path="/" element={<Homepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                        <Route path="/notes/archive" element={<Archivepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                        <Route path="/notes/new" element={<AddNotepage addNote={this.onAddNoteHandler}/>}/>
-                        <Route path="/notes/detail/:id" element={<Detailpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                        <Route path="/notes/search" element={<Detailsearchpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                        <Route path="*" element={<Notfoundpage message={""}/>}/>
-                    </Routes>
-                </BrowserRouter>
-            </div>
-        );
+        if (this.state.initializing) {
+            return null;
+        }
+
+        if (this.state.authedUser == null) {
+            return (
+                <div className="container" id="container">
+                    <BrowserRouter>
+                        <Navigation logout={this.onLogout} name={''}/>
+                        <Routes>
+                            <Route path="/*" element={<Loginpage loginSuccess={this.onLoginSuccess}/>}/>                            
+                            <Route path="/register" element={<Registerpage/>}/>
+                            <Route path="*" element={<Notfoundpage message={""}/>}/>
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="container" id="container">
+                    <BrowserRouter>
+                        <Navigation logout={this.onLogout} name={this.state.authedUser.name}/>
+                        <Routes>
+                            <Route path="/" element={<Homepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                            <Route path="/notes/archive" element={<Archivepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                            <Route path="/notes/new" element={<AddNotepage addNote={this.onAddNoteHandler}/>}/>
+                            <Route path="/notes/detail/:id" element={<Detailpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                            <Route path="/notes/search" element={<Detailsearchpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                            <Route path="*" element={<Notfoundpage message={""}/>}/>
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            );
+        }
     }
 }
 

@@ -94,6 +94,22 @@ body {
     min-width: 50%;
 }
 
+.form-group-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 50%;
+    margin-top: 12px;
+}
+
+.form-group-row > a {
+    font-size: var(--font-form-size-mobile);
+    color: black;
+    text-decoration: none;
+}
+
 .form-group > label {
     font-size: var(--font-form-size);
 }
@@ -219,6 +235,7 @@ body {
 .navbar > ul {
     display: flex;
     gap: 12px;
+    align-items: center;
 }
 
 .navbar > ul > li {
@@ -234,6 +251,59 @@ body {
 .navbar > ul > li > a:hover {
     cursor: pointer;
 }
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 124px;
+    box-shadow: 5px 5px 10px #cdcccc;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.dropdown-content > a {
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.dropdown-content > button {
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.dropdown-content > a:hover, .dropdown-content > button:hover {
+    color: black;
+    text-decoration: none;
+    background-color: #e4e2e2;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-title {
+    display: flex;
+    align-items: center;
+}
+
+.logout {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: var(--font-content-title-size);
+}
+
 
 #toast {
     visibility: hidden;
@@ -304,6 +374,19 @@ body {
         min-width: 25%;        
     }
 
+    .form-group-row {
+        gap: 8px;
+        flex-direction: column-reverse;
+    }
+
+    .form-group-row > a {
+        font-size: var(--font-form-size-mobile);
+    }
+
+    .form-group-row > button {
+        width: 100%;        
+    }
+
     .note-list {
         max-width: 100%;
     }
@@ -349,6 +432,10 @@ body {
         font-size: var(--font-content-size);
     }    
 
+    .logout {
+        font-size: var(--font-content-size);
+    }
+
     .note-container-detail > h1 {
         font-size: var(--font-content-title-size);
     }
@@ -357,4 +444,8 @@ body {
         font-size: var(--font-content-size);
         padding: 0px 24px;
     }    
+
+    .dropdown-content {
+        left: -90%;
+    }
 }
