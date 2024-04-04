@@ -4,11 +4,13 @@ import { login } from "../utils/network-data";
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../components/UseInput";
 import PropTypes from "prop-types";
+import { useLocaleProvider } from "../components/LocaleProvider";
 
 function Loginpage({ loginSuccess }) {
 
     const [email, onEmailChange] = useInput('');
     const [password, onPasswordChange] = useInput('');
+    const { language } = useLocaleProvider();
 
     const navigate = useNavigate();
 
@@ -55,7 +57,7 @@ function Loginpage({ loginSuccess }) {
                 <input type="password" id="password" value={password} onChange={onPasswordChange} />
             </div>
             <div className="form-group-row">
-                <Link to={"/register"}>Don't have an account? Register here</Link>
+                <Link to={"/register"}>{language == 'en' ? 'Don\'t have an account? Register here' : 'Tidak punya akun? Daftar disini'}</Link>
                 <button type="submit">Login</button>
             </div>
         </form>

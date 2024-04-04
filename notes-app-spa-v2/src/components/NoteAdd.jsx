@@ -1,62 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useLocaleProvider } from "./LocaleProvider";
 
-class NoteAdd extends React.Component {
-    constructor(props) {
-        super(props);
+function NoteAdd ({ addNote }) {
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const { language } = useLocaleProvider();
 
-        this.state = {
-            title: '',
-            body: ''
-        }
+    const onTitleChangeEventHandler = (event) => {
+        setTitle(event.target.value);
+    };
 
-        this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
-        this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
-        this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
-    }
-    
-    onTitleChangeEventHandler(event) {
-        this.setState(() => {
-            return {
-                title: event.target.value
-            }
-        })
-    }
+    const onBodyChangeEventHandler = (event) => {
+        setBody(event.target.value);
+    };
 
-    onBodyChangeEventHandler(event) {
-        this.setState(() => {
-            return {
-                body: event.target.value
-            }
-        })
-    }
-
-    onSubmitEventHandler(event) {
+    const onSubmitEventHandler = (event) => {
         event.preventDefault();
-        this.props.addNote(this.state);
-    }
+        addNote({ title, body });
+    };
 
-    render() {
-        return (
-            <form className="note-container" id="form" onSubmit={this.onSubmitEventHandler}>
-                <h1>Tambah Catatan</h1>
-                <div className="form-group">
-                    <label htmlFor="title">Judul</label>
-                    <input type="text" id="title" placeholder="Masukkan judul catatan" value={this.state.title} onChange={this.onTitleChangeEventHandler}/>
-                    <p>{this.state.title.length}/50</p>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="body">Deskripsi</label>
-                    <textarea id="body" cols="30" rows="10" placeholder="Masukkan deskripsi catatan" value={this.state.body} onChange={this.onBodyChangeEventHandler}></textarea>
-                    <p>{this.state.body.length}/500</p>
-                </div>
-                <div className="form-group">
-                    <button type="submit" id="addBtn">+Tambah</button>
-                </div>
-            </form>
-        )
-    }
-}
+    return (
+        <form className="note-container" id="form" onSubmit={onSubmitEventHandler}>
+            <h1>{language == 'en' ? 'Add Note' : 'Tambah Catatan'}</h1>
+            <div className="form-group">
+                <label htmlFor="title">{language == 'en' ? 'Title' : 'Judul'}</label>
+                <input type="text" id="title" placeholder={language == 'en' ? 'Please insert title note' : 'Masukkan judul catatan'} value={title} onChange={onTitleChangeEventHandler} />
+                <p>{title.length}/50</p>
+            </div>
+            <div className="form-group">
+                <label htmlFor="body">{language == 'en' ? 'Description' : 'Deskripsi'}</label>
+                <textarea id="body" cols="30" rows="10" placeholder={language == 'en' ? 'Please insert description note' : 'Masukkan deskripsi catatan'} value={body} onChange={onBodyChangeEventHandler}></textarea>
+                <p>{body.length}/500</p>
+            </div>
+            <div className="form-group">
+                <button type="submit" id="addBtn">{language == 'en' ? '+Add' : '+Tambah'}</button>
+            </div>
+        </form>
+    );
+};
 
 NoteAdd.propTypes = {
     addNote: PropTypes.func.isRequired,

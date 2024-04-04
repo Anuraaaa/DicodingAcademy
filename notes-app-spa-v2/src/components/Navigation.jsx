@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useTheme } from "./LocaleProvider";
+import { useLocaleProvider } from "./LocaleProvider";
 
 function Navigation({ logout, name }) {
 
-    const {theme, toggleTheme} = useTheme();
-    const {language, toggleLanguage} = useTheme();
+    const {theme, toggleTheme} = useLocaleProvider();
+    const {language, toggleLanguage} = useLocaleProvider();
 
     return (
         <div className="navbar">
-            <h1>Notes App</h1>
+            <h1>{language == 'en'? 'Notes App' : 'Aplikasi Note'}</h1>
             <ul>
                 <li><button className="material-symbols-outlined" onClick={toggleTheme}>{theme === 'light' ? 'light_mode' : 'dark_mode'}</button></li>                
                 <li>
@@ -27,10 +27,10 @@ function Navigation({ logout, name }) {
                                 <div className="material-symbols-outlined">expand_more</div>
                             </Link>
                             <div className="dropdown-content">
-                                <Link to={"/"}>Home</Link>
-                                <Link to={"/notes/new"}>New</Link>
-                                <Link to={"/notes/archive"}>Archive</Link>
-                                <button className="logout" onClick={logout}>Logout</button>
+                                <Link to={"/"}>{language == 'en'? 'Home' : 'Rumah'}</Link>
+                                <Link to={"/notes/new"}>{language == 'en'? 'New' : 'Baru'}</Link>
+                                <Link to={"/notes/archive"}>{language == 'en'? 'Archive' : 'Arsip'}</Link>
+                                <button className="logout" onClick={logout}>{language == 'en'? 'Logout' : 'Keluar'}</button>
                             </div>
                         </li>
                     </>

@@ -3,6 +3,7 @@ import { showToast } from "../utils/NoteToast";
 import { register } from "../utils/network-data";
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../components/UseInput";
+import { useLocaleProvider } from "../components/LocaleProvider";
 
 function Registerpage() {
 
@@ -10,6 +11,7 @@ function Registerpage() {
     const [email, onEmailChange] = useInput('');
     const [password, onPasswordChange] = useInput('');
     const [confpassword, onConfPasswordChange] = useInput('');
+    const { language } = useLocaleProvider();
 
     const navigate = useNavigate();
 
@@ -74,7 +76,7 @@ function Registerpage() {
                 <input type="password" id="confpassword" value={confpassword} onChange={onConfPasswordChange} />
             </div>
             <div className="form-group-row">
-                <Link to={"/login"}>Already have an account? Login here</Link>
+                <Link to={"/login"}>{language == 'en' ? 'Already have an account? Login here' : 'Sudah punya akun? Login disini'}</Link>
                 <button type="submit">Register</button>
             </div>
         </form>

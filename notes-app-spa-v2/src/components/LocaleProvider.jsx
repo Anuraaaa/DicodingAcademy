@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 
 const LocaleContext = React.createContext();
 
-const useTheme = () => useContext(LocaleContext);
+const useLocaleProvider = () => useContext(LocaleContext);
 
 const LocaleProvider = ({ children }) => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -31,4 +31,4 @@ const LocaleProvider = ({ children }) => {
     );
 };
 
-export {LocaleProvider, useTheme};
+export {LocaleProvider, useLocaleProvider};

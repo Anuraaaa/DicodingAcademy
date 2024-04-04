@@ -1,116 +1,79 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import NoteList from "./NoteList";
+import { useLocaleProvider } from "./LocaleProvider";
 
-class NoteItem extends React.Component {
-    constructor(props) {
-        super(props);
+function NoteItem ({ notes, onArchive, onDelete, isArchive, showAll }) {
+    const [activeNote, setActiveNote] = useState([]);
+    const [archiveNote, setArchiveNote] = useState([]);
+    const { language } = useLocaleProvider();
 
-        this.state = {
-            notes: this.props.notes,
-            isArchive: this.props.isArchive,
-            showAll: this.props.showAll
-        }
-    }
+    useEffect(() => {
+        setActiveNote(notes.filter((note) => !note.archived));
+        setArchiveNote(notes.filter((note) => note.archived));
+    }, [notes]);
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.notes !== this.props.notes) {
-            this.setState({
-                notes: this.props.notes
-            }); 
-        }       
-    }
-
-    render() {
-        const activeNote = this.state.notes.filter(note => note.archived === false);
-        const archiveNote = this.state.notes.filter(note => note.archived === true);
-
-        if (this.state.showAll) {
-            return (
-                <div className="note-item-group">
-                    <div className="note-item">
-                        <h1>Active</h1>
-                        {activeNote && activeNote.length > 0 ? (
-                            activeNote.map((note) => (
-                                <NoteList
-                                    key={note.id}
-                                    id={note.id}
-                                    onArchive={this.props.onArchive}
-                                    onDelete={this.props.onDelete}
-                                    {...note}
-                                />
-                            ))
-                        ) : (
-                            <p>Tidak ada catatan</p>
-                        )}
-                    </div>
-                    <div className="note-item">
-                        <h1>Archive</h1>
-                        {archiveNote && archiveNote.length > 0 ? (
-                            archiveNote.map((note) => (
-                                <NoteList
-                                    key={note.id}
-                                    id={note.id}
-                                    onArchive={this.props.onArchive}
-                                    onDelete={this.props.onDelete}
-                                    {...note}
-                                />
-                            ))
-                        ) : (
-                            <p>Tidak ada catatan</p>
-                        )}
-                    </div>
+    if (showAll) {
+        return (
+            <div className="note-item-group">
+                <div className="note-item">
+                    <h1>{language == 'en'? 'Active' : 'Aktif'}</h1>
+                    {activeNote.length > 0 ? (
+                        activeNote.map((note) => (
+                            <NoteList
+                                key={note.id}
+                                id={note.id}
+                                onArchive={onArchive}
+                                onDelete={onDelete}
+                                {...note}
+                            />
+                        ))
+                    ) : (
+                        <p>{language == 'en'? 'There is no any note' : 'Tidak ada catatan'}</p>
+                    )}
                 </div>
-            )
-        }
-        else {
-            if (this.state.isArchive) {
-                return (
-                    <div className="note-item-group-single">
-                        <div className="note-item-single">
-                            <h1>Archive</h1>
-                            {archiveNote && archiveNote.length > 0 ? (
-                                archiveNote.map((note) => (
-                                    <NoteList
-                                        key={note.id}
-                                        id={note.id}
-                                        onArchive={this.props.onArchive}
-                                        onDelete={this.props.onDelete}
-                                        {...note}
-                                    />
-                                ))
-                            ) : (
-                                <p>Tidak ada catatan</p>
-                            )}
-                        </div>
-                    </div>
-                )
-            }
-            else {
-                return (
-                    <div className="note-item-group-single">
-                        <div className="note-item-single">
-                            <h1>Active</h1>
-                            {activeNote && activeNote.length > 0 ? (
-                                activeNote.map((note) => (
-                                    <NoteList
-                                        key={note.id}
-                                        id={note.id}
-                                        onArchive={this.props.onArchive}
-                                        onDelete={this.props.onDelete}
-                                        {...note}
-                                    />
-                                ))
-                            ) : (
-                                <p>Tidak ada catatan</p>
-                            )}
-                        </div>
-                    </div>
-                )
-            }
-        }
+                <div className="note-item">
+                    <h1>{language == 'en'? 'Archive' : 'Arsip'}</h1>
+                    {archiveNote.length > 0 ? (
+                        archiveNote.map((note) => (
+                            <NoteList
+                                key={note.id}
+                                id={note.id}
+                                onArchive={onArchive}
+                                onDelete={onDelete}
+                                {...note}
+                            />
+                        ))
+                    ) : (
+                        <p>{language == 'en'? 'There is no any note' : 'Tidak ada catatan'}</p>
+                    )}
+                </div>
+            </div>
+        );
+    } else {
+        const notesToRender = isArchive ? archiveNote : activeNote;
+        return (
+            <div className="note-item-group-single">
+                <div className="note-item-single">
+                    <h1>{isArchive ? language == 'en'? 'Archive' : 'Arsip' : language == 'en'? 'Active' : 'Aktif'}</h1>
+                    {notesToRender.length > 0 ? (
+                        notesToRender.map((note) => (
+                            <NoteList
+                                key={note.id}
+                                id={note.id}
+                                onArchive={onArchive}
+                                onDelete={onDelete}
+                                {...note}
+                            />
+                        ))
+                    ) : (
+                        <p>{language == 'en'? 'There is no any note' : 'Tidak ada catatan'}</p>
+                    )}
+                </div>
+            </div>
+        );
     }
-}
+};
 
 NoteItem.propTypes = {
     notes: PropTypes.arrayOf(
@@ -123,9 +86,9 @@ NoteItem.propTypes = {
         })
     ).isRequired,
     onArchive: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,    
+    onDelete: PropTypes.func.isRequired,
     isArchive: PropTypes.bool.isRequired,
-    showAll: PropTypes.bool.isRequired
-}
+    showAll: PropTypes.bool.isRequired,
+};
 
 export default NoteItem;
