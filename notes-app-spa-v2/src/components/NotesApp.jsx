@@ -147,14 +147,18 @@ class NotesApp extends React.Component {
 
     async componentDidMount() {
         const { data } = await getUserLogged();
-        const activeNote = await getActiveNotes();
-        const archiveNote = await getArchivedNotes();
-        const noteData = {
-            data: [
-              ...activeNote.data,
-              ...archiveNote.data
-            ]
-        };
+        let noteData = {};
+
+        if (data !== null) {
+            const activeNote = await getActiveNotes();
+            const archiveNote = await getArchivedNotes();
+            noteData = {
+                data: [
+                  ...activeNote.data,
+                  ...archiveNote.data
+                ]
+            };
+        }
 
         this.setState(() => {
             return {
