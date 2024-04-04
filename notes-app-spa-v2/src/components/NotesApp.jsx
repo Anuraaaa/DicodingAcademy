@@ -12,6 +12,7 @@ import Registerpage from "../pages/Registerpage.jsx";
 import { addNote, archiveNote, deleteNote, getActiveNotes, getArchivedNotes, getNote, getUserLogged, putAccessToken, unarchiveNote } from "../utils/network-data.js";
 import Loginpage from "../pages/Loginpage.jsx";
 import { ThemeProvider } from "./ThemeProvider.jsx";
+import Loader from "./Loader.jsx";
 
 class NotesApp extends React.Component {
 
@@ -174,7 +175,7 @@ class NotesApp extends React.Component {
 
     render() {
         if (this.state.initializing) {
-            return null;
+            return <Loader/>;
         }
 
         return (
