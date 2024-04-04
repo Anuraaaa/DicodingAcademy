@@ -8,18 +8,8 @@ class AddNotepage extends React.Component {
         super(props);
 
         this.state = {
-            addNote: this.props.addNote, 
-            notes: this.props.notes //possible no
+            addNote: this.props.addNote
         }
-    }
-
-    // possible no
-    componentDidUpdate(prevProps) {
-        if (prevProps.notes !== this.props.notes) {
-            this.setState({
-                notes: this.props.notes
-            }); 
-        }       
     }
 
     render() {

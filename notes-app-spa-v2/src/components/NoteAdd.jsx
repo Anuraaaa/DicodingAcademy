@@ -7,13 +7,11 @@ class NoteAdd extends React.Component {
 
         this.state = {
             title: '',
-            body: '',
-            archived: true
+            body: ''
         }
 
         this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
         this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
-        this.onArchiveChangeEventHandler = this.onArchiveChangeEventHandler.bind(this);
         this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
     }
     
@@ -29,14 +27,6 @@ class NoteAdd extends React.Component {
         this.setState(() => {
             return {
                 body: event.target.value
-            }
-        })
-    }
-
-    onArchiveChangeEventHandler(event) {
-        this.setState(() => {
-            return {
-                archived: event.target.value == "Yes" ? true : false
             }
         })
     }
@@ -59,13 +49,6 @@ class NoteAdd extends React.Component {
                     <label htmlFor="body">Deskripsi</label>
                     <textarea id="body" cols="30" rows="10" placeholder="Masukkan deskripsi catatan" value={this.state.body} onChange={this.onBodyChangeEventHandler}></textarea>
                     <p>{this.state.body.length}/500</p>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="archive">Archive</label>
-                    <select name="archive" id="archive" defaultValue={this.state.archived} onChange={this.onArchiveChangeEventHandler}>
-                        <option value={"Yes"}>Yes</option>
-                        <option value={"No"}>No</option>
-                    </select>
                 </div>
                 <div className="form-group">
                     <button type="submit" id="addBtn">+Tambah</button>

@@ -23,11 +23,11 @@ function Detailsearchpage({ notes, onArchiveUpdate, onDeleteNoteHandler }) {
     
     let filterNote = notes.data;
     if (searchQuery !== undefined) {
-        filterNote = notes.filter(note => note.title.toLowerCase().includes(searchQuery));
+        filterNote = notes.data.filter(note => note.title.toLowerCase().includes(searchQuery));
     }
 
     if (title) {
-        const searchNote = notes.filter(note => note.title.toLowerCase().includes(title.toLowerCase()));
+        const searchNote = notes.data.filter(note => note.title.toLowerCase().includes(title.toLowerCase()));
         return (
             <div>
                 <NoteSearch notes={filterNote} onSearch={onSearchNote} onClickSearch={onClickSearch}/>

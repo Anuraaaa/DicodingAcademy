@@ -30,7 +30,7 @@ class NotesApp extends React.Component {
         this.onLogout = this.onLogout.bind(this);
     }
 
-    async onAddNoteHandler({title, body, archived}) {
+    async onAddNoteHandler({title, body }) {
 
         if (title.length == 0)
             return showToast("Judul tidak bisa kosong!", "white", "red");    
@@ -52,9 +52,9 @@ class NotesApp extends React.Component {
         if (!response.error) {
             const newNote = {
                 id: `notes-${+new Date()}`,
-                title,
-                body,
-                archived: archived,
+                title: title,
+                body: body,
+                archived: false,
                 createdAt: new Date().toISOString()
             };
     
