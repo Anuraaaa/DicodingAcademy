@@ -11,7 +11,7 @@ import Archivepage from "../pages/Archivepage.jsx";
 import Registerpage from "../pages/Registerpage.jsx";
 import { addNote, archiveNote, deleteNote, getActiveNotes, getArchivedNotes, getNote, getUserLogged, putAccessToken, unarchiveNote } from "../utils/network-data.js";
 import Loginpage from "../pages/Loginpage.jsx";
-import { ThemeProvider } from "./ThemeProvider.jsx";
+import { LocaleProvider } from "./LocaleProvider.jsx";
 import Loader from "./Loader.jsx";
 
 class NotesApp extends React.Component {
@@ -179,7 +179,7 @@ class NotesApp extends React.Component {
         }
 
         return (
-            <ThemeProvider>
+            <LocaleProvider>
                 <div className="container" id="container">
                     <BrowserRouter>
                         <Navigation logout={this.onLogout} name={this.state.authedUser == null ? '' : this.state.authedUser.name}/>
@@ -203,7 +203,7 @@ class NotesApp extends React.Component {
                         </Routes>
                     </BrowserRouter>
                 </div>
-            </ThemeProvider>
+            </LocaleProvider>
         )
     }
 }

@@ -1,16 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "./LocaleProvider";
 
 function Navigation({ logout, name }) {
 
     const {theme, toggleTheme} = useTheme();
+    const {language, toggleLanguage} = useTheme();
+
     return (
         <div className="navbar">
             <h1>Notes App</h1>
             <ul>
                 <li><button className="material-symbols-outlined" onClick={toggleTheme}>{theme === 'light' ? 'light_mode' : 'dark_mode'}</button></li>                
+                <li>
+                    <button className="lang-group" onClick={toggleLanguage}>
+                        <div className="material-symbols-outlined">g_translate</div>
+                        <div>{language === 'en'? 'en' : 'id'}</div>
+                    </button>
+                </li>
                 {name !== '' && 
                     <>
                         <li className="dropdown">

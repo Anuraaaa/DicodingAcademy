@@ -315,6 +315,12 @@ body {
     align-items: center;
 }
 
+.lang-group {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
 .logout {
     background-color: transparent;
     border: none;
