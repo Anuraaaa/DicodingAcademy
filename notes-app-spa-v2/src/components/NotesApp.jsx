@@ -148,7 +148,9 @@ class NotesApp extends React.Component {
 
     async componentDidMount() {
         const { data } = await getUserLogged();
-        let noteData = {};
+        let noteData = {
+            data: []
+        };
 
         if (data != null) {
             const activeNote = await getActiveNotes();
@@ -175,41 +177,33 @@ class NotesApp extends React.Component {
             return null;
         }
 
-        if (this.state.authedUser == null) {
-            return (
-                <ThemeProvider>
-                    <div className="container" id="container">
-                        <BrowserRouter>
-                            <Navigation logout={this.onLogout} name={''}/>
-                            <Routes>
-                                <Route path="/*" element={<Loginpage loginSuccess={this.onLoginSuccess}/>}/>                            
-                                <Route path="/register" element={<Registerpage/>}/>
-                                <Route path="*" element={<Notfoundpage message={""}/>}/>
-                            </Routes>
-                        </BrowserRouter>
-                    </div>
-                </ThemeProvider>
-            );
-        }
-        else {
-            return (
-                <ThemeProvider>
-                    <div className="container" id="container">
-                        <BrowserRouter>
-                            <Navigation logout={this.onLogout} name={this.state.authedUser.name}/>
-                            <Routes>
-                                <Route path="/" element={<Homepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                                <Route path="/notes/archive" element={<Archivepage notes={this.state.notes} onSearchNote={this.onSearchNote} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                                <Route path="/notes/new" element={<AddNotepage notes={this.state.notes} addNote={this.onAddNoteHandler}/>}/>
-                                <Route path="/notes/detail/:id" element={<Detailpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                                <Route path="/notes/search" element={<Detailsearchpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
-                                <Route path="*" element={<Notfoundpage message={""}/>}/>
-                            </Routes>
-                        </BrowserRouter>
-                    </div>
-                </ThemeProvider>
-            );
-        }
+        return (
+            <ThemeProvider>
+                <div className="container" id="container">
+                    <BrowserRouter>
+                        <Navigation logout={this.onLogout} name={this.state.authedUser == null ? '' : this.state.authedUser.name}/>
+                        <Routes>
+                            {this.state.authedUser == null ? 
+                                <>
+                                    <Route path="/*" element={<Loginpage loginSuccess={this.onLoginSuccess}/>}/>                            
+                                    <Route path="/register" element={<Registerpage/>}/>
+                                    <Route path="*" element={<Notfoundpage message={""}/>}/>
+                                </>                            
+                                :
+                                <>
+                                    <Route path="/" element={<Homepage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                                    <Route path="/notes/archive" element={<Archivepage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                                    <Route path="/notes/new" element={<AddNotepage notes={this.state.notes} addNote={this.onAddNoteHandler}/>}/>
+                                    <Route path="/notes/detail/:id" element={<Detailpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                                    <Route path="/notes/search" element={<Detailsearchpage notes={this.state.notes} onArchiveUpdate={this.onArchiveUpdate} onDeleteNoteHandler={this.onDeleteNoteHandler}/>}/>
+                                    <Route path="*" element={<Notfoundpage message={""}/>}/>
+                                </>
+                            }
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            </ThemeProvider>
+        )
     }
 }
 
