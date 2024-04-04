@@ -51,7 +51,7 @@ class NotesApp extends React.Component {
 
         if (!response.error) {
             const newNote = {
-                id: `notes-${+new Date()}`,
+                id: response.data.id,
                 title: title,
                 body: body,
                 archived: false,
