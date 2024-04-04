@@ -10,7 +10,7 @@ function Navigation({ logout, name }) {
         <div className="navbar">
             <h1>Notes App</h1>
             <ul>
-                <li><button className="material-symbols-outlined" onClick={toggleTheme}>{theme === 'light' ? 'dark_mode' : 'light_mode'}</button></li>                
+                <li><button className="material-symbols-outlined" onClick={toggleTheme}>{theme === 'light' ? 'light_mode' : 'dark_mode'}</button></li>                
                 {name !== '' && 
                     <>
                         <li className="dropdown">
