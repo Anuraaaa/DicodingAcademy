@@ -13,8 +13,6 @@ function Navigation() {
                     </Link>
                     <div className="dropdown-content">
                         <Link to={"/"}>Home</Link>
-                        <Link to={"/notes/new"}>New</Link>
-                        <Link to={"/notes/archive"}>Archive</Link>
                         <button>Logout</button>
                     </div>
                 </li>
