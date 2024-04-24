@@ -1,13 +1,13 @@
 import FormAuth from "../components/FormAuth";
 import Navigation from "../components/Navigation";
 
-function Login() {
-    return (
+function Register() {
+    return(
         <>
             <Navigation/>
-            <FormAuth state={"login"}/>
+            <FormAuth state={"register"}/>
         </>
     )
 }
 
-export default Login;
+export default Register;

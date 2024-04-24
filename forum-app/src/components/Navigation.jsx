@@ -1,29 +1,21 @@
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 function Navigation() {
     return (
-        <div className="navbar">
-            <h1>Aplikasi Note</h1>
-            <ul>
-                <li className="dropdown">
-                    <Link className="dropdown-title">
-                        <div>Nama</div>
-                        <div className="material-symbols-outlined">expand_more</div>
-                    </Link>
-                    <div className="dropdown-content">
-                        <Link to={"/"}>Home</Link>
-                        <button>Logout</button>
-                    </div>
-                </li>
-            </ul>
+        <div className="container bg-red-100">
+            <div className="flex justify-around p-6">
+                <h1 className="font-bold text-lg">Forum App</h1>
+                <ul className="flex gap-8">
+                    <li>
+                        <Link to={"/"} className="text-sm">Home</Link>
+                    </li>
+                    <li>
+                        <Link to={"/login"} className="text-sm">Login</Link>
+                    </li>
+                </ul>
+            </div>
         </div>
     )
-}
-
-Navigation.propTypes = {
-    logout: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired
 }
 
 export default Navigation;
