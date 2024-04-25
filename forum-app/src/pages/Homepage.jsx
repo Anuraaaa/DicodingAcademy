@@ -1,3 +1,4 @@
+import HeaderThread from "../components/HeaderThread";
 import Navigation from "../components/Navigation";
 import Thread from "../components/Thread";
 
@@ -5,9 +6,12 @@ function Homepage() {
     return (
         <>
             <Navigation/>
-            <Thread/>
-            <Thread/>
-            <Thread/>
+            <div className="container">
+                <HeaderThread/>
+                <Thread/>
+                <Thread/>
+                <Thread/>
+            </div>
         </>
     )
 }
