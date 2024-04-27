@@ -18,7 +18,7 @@ function SingleThread() {
         }
         async function getUsers() {
             const user = await getAllUser();
-            setUsers(user.data.users);
+            setUsers(user);
         }
         fetchThread(threadId);
         getUsers();
