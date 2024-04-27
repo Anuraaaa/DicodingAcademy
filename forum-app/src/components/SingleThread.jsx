@@ -1,29 +1,51 @@
+import { useParams } from "react-router";
 import Comment from "./Comment";
 import Header from "./Header";
 import Navigation from "./Navigation";
+import { useEffect, useState } from "react";
+import { getAllUser, getThreadById } from "../utils/data";
+import { formatDate } from "../utils/formatter";
 
 function SingleThread() {
+    const { threadId } = useParams();
+    const [thread, setThread] = useState([]);
+    const [users, setUsers] = useState([]);
+    
+    useEffect(() => {
+        async function fetchThread(threadId) {
+            const threadFetch = await getThreadById(threadId);
+            setThread(threadFetch);
+        }
+        async function getUsers() {
+            const user = await getAllUser();
+            setUsers(user.data.users);
+        }
+        fetchThread(threadId);
+        getUsers();
+    }, [thread, users])
+    
+    const filterUser = users?.filter((data) => data.id == thread.ownerId);
     return(
         <>
             <Header/>
             <div className="container">
                 <div className="flex flex-col gap-4 border-b-1 border-b-gray-200 p-8 shadow-lg">
                     <div className="border border-dashed border-gray-500 rounded w-[10%] text-center text-sm">
-                        <p>kategori</p>
+                        <p>{thread.category}</p>
                     </div>
-                    <h1 className="font-bold text-2xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet beatae accusantium cum quia, exercitationem cumque blanditiis?</h1>
-                    <p className="text-md">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic pariatur dicta aspernatur autem, magni quam sint vel vero. Odit sequi ad autem ratione nisi facilis, totam cumque iure ducimus sed excepturi et, libero quo voluptatibus officia quas dolore, assumenda veritatis mollitia? Consectetur, inventore! Illum perspiciatis sequi illo quas cumque. Vel dolore, facilis iusto in vero veritatis voluptatibus adipisci alias tempora, magnam itaque consectetur temporibus!</p>
+                    <h1 className="font-bold text-2xl">{thread.title}</h1>
+                    <p className="text-md">{thread.body}</p>
                     <div className="flex flex-row gap-4 items-center text-sm">
                         <button className="flex gap-2 items-center">
                             <span className="material-symbols-outlined">thumb_up</span>
-                            <span>100</span>
+                            <span>{thread.upVotesBy.length}</span>
                         </button>                        
                         <button className="flex gap-2 items-center">
                             <span className="material-symbols-outlined">thumb_down</span>
-                            <span>56</span>
+                            <span>{thread.downVotesBy.length}</span>
                         </button>                        
-                        <p>331 Hari lalu</p>
-                        <p>Dibuat oleh</p>
+                        <p>{formatDate(thread.createdAt)}</p>
+                        <p>Dibuat oleh {filterUser[0].name}</p>
                     </div>
                     <form action="#" className="flex flex-col gap-4">
                         <h1 className="font-semibold">Beri Komentar</h1>

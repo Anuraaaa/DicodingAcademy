@@ -21,7 +21,7 @@ async function registerUser(name, email, password) {
             console.log("ERROR: endpoint register user return status failed");
             return false;
         }
-        return result;
+        return result.data.user;
     } catch (error) {
         console.log(error);
     }
@@ -47,7 +47,7 @@ async function loginUser(email, password) {
             console.log("ERROR: endpoint login user return status failed");
             return false;
         }
-        return result;
+        return result.data;
     } catch (error) {
         console.log(error);
     }
@@ -62,7 +62,7 @@ async function getAllUser() {
             console.log("ERROR: endpoint get all user return status failed");
             return false;
         }
-        return result;
+        return result.data.users;
 
     } catch (error) {
         console.log(error)
@@ -82,7 +82,7 @@ async function getUserLoggedIn() {
             console.log("ERROR: endpoint get user logged in return status failed");
             return false;
         }
-        return result;
+        return result.data.user;
     } catch (error) {
         console.log(error)
     }
@@ -106,7 +106,7 @@ async function createThread(title, body, category) {
             console.log("ERROR: endpoint create thread return status failed");
             return false;
         }
-        return result;
+        return result.data.thread;
     } catch (error) {
         console.log(error)
     }
@@ -120,7 +120,7 @@ async function getAllThread() {
             console.log("ERROR: endpoint get all thread return status failed");
             return false;
         }
-        return result;        
+        return result.data.threads;        
     } catch (error) {
         console.log(error)
     }
@@ -134,7 +134,7 @@ async function getThreadById(threadId) {
             console.log("ERROR: endpoint get thread by id return status failed");
             return false;
         }
-        return result;        
+        return result.data.detailThread;        
     } catch (error) {
         console.log(error)
     }
@@ -156,7 +156,7 @@ async function createComment(threadId, content) {
             console.log("ERROR: endpoint create comment return status failed");
             return false;
         }
-        return result;                
+        return result.data.comment;                
     } catch (error) {
         console.log(error)
     }
@@ -175,7 +175,7 @@ async function likeThread(threadId) {
             console.log("ERROR: endpoint like thread return status failed");
             return false;
         }
-        return result;                
+        return result.data.vote;                
     } catch (error) {
         console.log(error)
     }
@@ -194,7 +194,7 @@ async function dislikeThread(threadId) {
             console.log("ERROR: endpoint dislike thread return status failed");
             return false;
         }
-        return result;                
+        return result.data.vote;                
     } catch (error) {
         console.log(error)
     }
@@ -213,7 +213,7 @@ async function neutralLikeThread(threadId) {
             console.log("ERROR: endpoint neutral like thread return status failed");
             return false;
         }
-        return result;                
+        return result.data.vote;                
     } catch (error) {
         console.log(error)
     }
@@ -232,7 +232,7 @@ async function likeComment(threadId, commentId) {
             console.log("ERROR: endpoint like comment return status failed");
             return false;
         }
-        return result;                
+        return result.data.vote;                
     } catch (error) {
         console.log(error)
     }
@@ -251,7 +251,7 @@ async function dislikeComment(threadId, commentId) {
             console.log("ERROR: endpoint dislike comment return status failed");
             return false;
         }
-        return result;                
+        return result.data.vote;                
     } catch (error) {
         console.log(error)
     }
@@ -270,7 +270,7 @@ async function neutralLikeComment(threadId, commentId) {
             console.log("ERROR: endpoint neutral like return status failed");
             return false;
         }
-        return result;                
+        return result.data.vote;                
     } catch (error) {
         console.log(error)
     }
@@ -284,13 +284,13 @@ async function getLeaderboards() {
             console.log("ERROR: endpoint get leaderboards return status failed");
             return false;
         }
-        return result;                
+        return result.data.leaderboards;                
     } catch (error) {
         console.log(error)
     }
 }
 
-export default {
+export {
     registerUser,
     loginUser,
     getAllUser,

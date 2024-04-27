@@ -14,7 +14,7 @@ function App() {
             <Route path="/" element={<Homepage/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path="/single-thread" element={<SingleThread/>}/>
+            <Route path="/single-thread/:threadId" element={<SingleThread/>}/>
             <Route path="/leaderboards" element={<Leaderboard/>}/>
             <Route path="*" element={<Notfound/>}/>
         </Routes>
