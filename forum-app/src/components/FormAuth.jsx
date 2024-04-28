@@ -5,7 +5,7 @@ function FormAuth({ state }) {
     return (
         <>
             <div className="container px-8 py-16">
-                <form action="#" className="flex flex-col border border-gray-300 p-8 gap-4 rounded">
+                <form action="#" className="flex flex-col border border-gray-300 p-8 gap-4 rounded mt-24">
                     <h1 className="text-center font-bold">{state == "register"? "Form Register" : "Form Login"}</h1>
                     {state == "register" && <>     
                         <div className="flex flex-col gap-2">

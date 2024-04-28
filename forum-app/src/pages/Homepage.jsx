@@ -4,6 +4,7 @@ import HeaderThread from "../components/HeaderThread";
 import Navigation from "../components/Navigation";
 import Thread from "../components/Thread";
 import { getAllThread } from "../utils/data.js";
+import { parseHTML } from "../utils/formatter.js";
 
 function Homepage() {
     const [threads, setThreads] = useState([]);
@@ -18,11 +19,11 @@ function Homepage() {
     return (
         <>
             <Header/>
-            <div className="container">
+            <div className="container pt-24">
                 <HeaderThread/>
                 {threads.map((data, i) => {
                     return (
-                        <Thread key={i} title={data.title} body={data.body} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} totalLike={data.upVotesBy.length} totalDislike={data.downVotesBy.length} ownerId={data.ownerId} id={data.id}/>
+                        <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} totalLike={data.upVotesBy.length} totalDislike={data.downVotesBy.length} ownerId={data.ownerId} id={data.id}/>
                     )
                 })}
             </div>

@@ -6,19 +6,19 @@ function Navigation() {
             <div className="container flex justify-around p-6">
                 <ul className="flex gap-8">
                     <li>
-                        <Link to={"/"} className="text-sm text-white flex gap-2 items-center">
+                        <Link to={"/"} className="text-sm text-white flex flex-col items-center">
                             <span className="material-symbols-outlined text-white">gesture</span>
                             <span>Threads</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/leaderboards"} className="text-sm text-white flex gap-2 items-center">
+                        <Link to={"/leaderboards"} className="text-sm text-white flex flex-col items-center">
                             <span className="material-symbols-outlined text-white">leaderboard</span>
                             <span>Leaderboard</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/login"} className="text-sm text-white flex gap-2 items-center">
+                        <Link to={"/login"} className="text-sm text-white flex flex-col items-center">
                             <span className="material-symbols-outlined text-white">login</span>
                             <span>Login</span>
                         </Link>

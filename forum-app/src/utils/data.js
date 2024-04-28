@@ -279,7 +279,7 @@ async function neutralLikeComment(threadId, commentId) {
 async function getLeaderboards() {
     try {
         const response = await fetch(`${url}/leaderboards`);
-        const result = response.json();
+        const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint get leaderboards return status failed");
             return false;
