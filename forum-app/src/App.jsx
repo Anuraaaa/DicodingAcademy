@@ -5,6 +5,7 @@ import Notfound from "./pages/Notfound";
 import Register from "./pages/Register";
 import SingleThread from "./components/SingleThread";
 import Leaderboard from "./pages/Leaderboard";
+import AddThread from "./pages/AddThread";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/register" element={<Register/>}/>
             <Route path="/single-thread/:threadId" element={<SingleThread/>}/>
             <Route path="/leaderboards" element={<Leaderboard/>}/>
+            <Route path="/new" element={<AddThread/>}/>
             <Route path="*" element={<Notfound/>}/>
         </Routes>
       </BrowserRouter>

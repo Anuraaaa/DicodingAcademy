@@ -101,7 +101,7 @@ async function getUserLoggedIn() {
     }
 }
 
-async function createThread(title, body, category) {
+async function createThread({title, body, category}) {
     try {
         const response = await fetchWithToken(`${url}/threads`, {
             method: "POST",
