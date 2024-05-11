@@ -11,15 +11,15 @@ function Homepage() {
     
     useEffect(() => {
         async function fetchThread() {
-            const threadFetch = await getAllThread();
-            setThreads(threadFetch);
+            const {data} = await getAllThread();
+            setThreads(data.threads);
         }
         fetchThread();
     }, [threads]);
     return (
         <>
             <Header/>
-            <div className="container pt-24">
+            <div className="container pt-24 mx-auto">
                 <HeaderThread/>
                 {threads.map((data, i) => {
                     return (

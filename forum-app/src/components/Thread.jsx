@@ -9,8 +9,8 @@ function Thread({title, body, category, createdAt, totalComments, totalLike, tot
 
     useEffect(() => {
         async function getUsers() {
-            const user = await getAllUser();
-            setUsers(user);
+            const {data} = await getAllUser();
+            setUsers(data.users);
         }
         getUsers();
     }, [users])

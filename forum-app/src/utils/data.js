@@ -1,6 +1,24 @@
 const url = "https://forum-api.dicoding.dev/v1";
 
-async function registerUser(name, email, password) {
+function getAccessToken() {
+    return localStorage.getItem('token');
+}
+  
+function putAccessToken(token) {
+    return localStorage.setItem('token', token);
+}
+  
+async function fetchWithToken(url, options = {}) {
+    return fetch(url, {
+        ...options,
+        headers: {
+        ...options.headers,
+        Authorization: `Bearer ${getAccessToken()}`,
+        },
+    });
+}
+  
+async function registerUser({name, email, password}) {
     try {        
         const response = await fetch(`${url}/register`, {
             method: "POST",
@@ -19,15 +37,15 @@ async function registerUser(name, email, password) {
 
         if (result.status != "success") {
             console.log("ERROR: endpoint register user return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.user;
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error);
     }
 }
 
-async function loginUser(email, password) {
+async function loginUser({email, password}) {
     try {        
         const response = await fetch(`${url}/login`, {
             method: "POST",
@@ -45,9 +63,9 @@ async function loginUser(email, password) {
 
         if (result.status != "success") {
             console.log("ERROR: endpoint login user return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data;
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error);
     }
@@ -60,9 +78,9 @@ async function getAllUser() {
 
         if (result.status != "success") {
             console.log("ERROR: endpoint get all user return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.users;
+        return { error: false, message: result.message, data: result.data };
 
     } catch (error) {
         console.log(error)
@@ -71,18 +89,13 @@ async function getAllUser() {
 
 async function getUserLoggedIn() {
     try {
-        const response = await fetch(`${url}/users/me`, {
-            headers: {
-                "Authorization": `Bearer <token>`
-            }
-        });
-
+        const response = await fetchWithToken(`${url}/users/me`);
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint get user logged in return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.user;
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -90,11 +103,8 @@ async function getUserLoggedIn() {
 
 async function createThread(title, body, category) {
     try {
-        const response = await fetch(`${url}/threads`, {
+        const response = await fetchWithToken(`${url}/threads`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`
-            },
             body: JSON.stringify({
                 title: title,
                 body: body,
@@ -104,9 +114,9 @@ async function createThread(title, body, category) {
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint create thread return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.thread;
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -118,9 +128,9 @@ async function getAllThread() {
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint get all thread return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.threads;        
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -132,9 +142,9 @@ async function getThreadById(threadId) {
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint get thread by id return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.detailThread;        
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -142,11 +152,8 @@ async function getThreadById(threadId) {
 
 async function createComment(threadId, content) {
     try {
-        const response = await fetch(`${url}/threads/${threadId}/comments`, {
+        const response = await fetchWithToken(`${url}/threads/${threadId}/comments`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`                
-            },
             body: JSON.stringify({
                 content: content
             })
@@ -154,9 +161,9 @@ async function createComment(threadId, content) {
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint create comment return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.comment;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -164,18 +171,15 @@ async function createComment(threadId, content) {
 
 async function likeThread(threadId) {
     try {
-        const response = await fetch(`${url}/threads/${threadId}/up-vote`, {
+        const response = await fetchWithToken(`${url}/threads/${threadId}/up-vote`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`                
-            }
         })
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint like thread return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.vote;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -183,18 +187,15 @@ async function likeThread(threadId) {
 
 async function dislikeThread(threadId) {
     try {
-        const response = await fetch(`${url}/threads/${threadId}/down-vote`, {
+        const response = await fetchWithToken(`${url}/threads/${threadId}/down-vote`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`                
-            }
         })
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint dislike thread return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.vote;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -202,18 +203,15 @@ async function dislikeThread(threadId) {
 
 async function neutralLikeThread(threadId) {
     try {
-        const response = await fetch(`${url}/threads/${threadId}/neutral-vote`, {
+        const response = await fetchWithToken(`${url}/threads/${threadId}/neutral-vote`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`                
-            }
         })
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint neutral like thread return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.vote;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -221,18 +219,15 @@ async function neutralLikeThread(threadId) {
 
 async function likeComment(threadId, commentId) {
     try {
-        const response = await fetch(`${url}/threads/${threadId}/comments/${commentId}/up-vote`, {
+        const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/up-vote`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`                
-            }
         })
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint like comment return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.vote;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -240,18 +235,15 @@ async function likeComment(threadId, commentId) {
 
 async function dislikeComment(threadId, commentId) {
     try {
-        const response = await fetch(`${url}/threads/${threadId}/comments/${commentId}/down-vote`, {
+        const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/down-vote`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`                
-            }
         })
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint dislike comment return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.vote;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -259,18 +251,15 @@ async function dislikeComment(threadId, commentId) {
 
 async function neutralLikeComment(threadId, commentId) {
     try {
-        const response = await fetch(`${url}/threads/${threadId}/comments/${commentId}/neutral-vote`, {
+        const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/neutral-vote`, {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer <token>`                
-            }
         })
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint neutral like return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.vote;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -282,9 +271,9 @@ async function getLeaderboards() {
         const result = await response.json();
         if (result.status != "success") {
             console.log("ERROR: endpoint get leaderboards return status failed");
-            return false;
+            return { error: true, message: result.message, data: null };
         }
-        return result.data.leaderboards;                
+        return { error: false, message: result.message, data: result.data };
     } catch (error) {
         console.log(error)
     }
@@ -305,6 +294,7 @@ export {
     likeComment,
     dislikeComment,
     neutralLikeComment,
-    getLeaderboards        
+    getLeaderboards,
+    putAccessToken        
 }
  

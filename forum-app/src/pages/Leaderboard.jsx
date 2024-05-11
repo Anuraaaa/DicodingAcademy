@@ -9,16 +9,15 @@ function Leaderboard() {
     
     useEffect(() => {
         async function fetchLeaderboard() {
-            const leaderboardFetch = await getLeaderboards();
-            setLeaderboard(leaderboardFetch);
+            const {data} = await getLeaderboards();
+            setLeaderboard(data.leaderboards);
         }
         fetchLeaderboard();
     }, [leaderboard])
-    console.log(leaderboard);
     return (
         <>
             <Header/>
-            <div className="container">
+            <div className="container mx-auto">
                 <div className="bg-gray-100 p-8 flex flex-col gap-4 rounded shadow-lg pt-24">
                     <h1 className="font-bold">Klasmen Pengguna Aktif</h1>
                     <div className="flex justify-between">

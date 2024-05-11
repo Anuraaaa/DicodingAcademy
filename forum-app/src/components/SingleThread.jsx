@@ -13,37 +13,37 @@ function SingleThread() {
     
     useEffect(() => {
         async function fetchThread(threadId) {
-            const threadFetch = await getThreadById(threadId);
-            setThread(threadFetch);
+            const {data} = await getThreadById(threadId);
+            setThread(data.detailThread);
         }
         async function fetchUser() {
-            const user = await getAllUser();
-            setUsers(user);
+            const {data} = await getAllUser();
+            setUsers(data.users);
         }
         fetchThread(threadId);
         fetchUser();
     }, [threadId, thread, users])
     
-    const filterUser = users?.filter((data) => data.id == thread.owner.id);
+    const filterUser = users?.filter((data) => data.id == thread?.owner?.id);
     const comments = thread?.comments;
     return(
         <>
             <Header/>
-            <div className="container">
+            <div className="container mx-auto">
                 <div className="flex flex-col gap-4 border-b-1 border-b-gray-200 p-8 shadow-lg pt-24">
                     <div className="border border-dashed border-gray-500 rounded w-[10%] text-center text-sm">
-                        <p>{thread.category}</p>
+                        <p>{thread?.category}</p>
                     </div>
-                    <h1 className="font-bold text-2xl">{thread.title}</h1>
-                    <p className="text-md">{thread.body}</p>
+                    <h1 className="font-bold text-2xl">{thread?.title}</h1>
+                    <p className="text-md">{parseHTML(thread?.body)}</p>
                     <div className="flex flex-row gap-4 items-center text-sm">
                         <button className="flex gap-2 items-center">
                             <span className="material-symbols-outlined">thumb_up</span>
-                            <span>{thread.upVotesBy?.length}</span>
+                            <span>{thread?.upVotesBy?.length}</span>
                         </button>                        
                         <button className="flex gap-2 items-center">
                             <span className="material-symbols-outlined">thumb_down</span>
-                            <span>{thread.downVotesBy?.length}</span>
+                            <span>{thread?.downVotesBy?.length}</span>
                         </button>                        
                         <p>{formatDate(thread.createdAt)}</p>
                         <div className="flex items-center gap-2">                            
