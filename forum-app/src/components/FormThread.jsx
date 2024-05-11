@@ -1,8 +1,6 @@
-import { useDispatch } from "react-redux";
 import { createThread } from "../utils/data";
 import { showToast } from "../utils/toast";
 import useInput from "./UseInput";
-import { actionThread } from "../utils/redux/thread/action";
 import { useNavigate } from "react-router";
 
 function FormThread() {
@@ -10,7 +8,6 @@ function FormThread() {
     const [title, onTitleChange] = useInput("");
     const [category, onCategoryChange] = useInput("");
     const [body, onBodyChange] = useInput("");
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
@@ -34,11 +31,10 @@ function FormThread() {
         if (body.length > 255)
             return showToast('Gagal membuat diskusi! deskripsi maksimal 255 karakter', "white", "red"); 
 
-        const {error, message, data} = await createThread({title, body, category});
+        const {error, message} = await createThread({title, body, category});
         if (error)
             return showToast(`Gagal membuat diskusi! ${message}`, "white", "red");
 
-        dispatch(actionThread(data));
         showToast("Berhasil membuat diskusi!", "white", "green");
         navigate('/');
     }

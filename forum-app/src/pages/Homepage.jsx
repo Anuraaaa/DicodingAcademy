@@ -30,7 +30,7 @@ function Homepage() {
                 <HeaderThread/>
                 {threads?.thread?.map((data, i) => {
                     return (
-                        <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} totalLike={data.upVotesBy.length} totalDislike={data.downVotesBy.length} ownerId={data.ownerId} id={data.id}/>
+                        <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} likes={data.upVotesBy} dislikes={data.downVotesBy} ownerId={data.ownerId} id={data.id}/>
                     )
                 })}
             </div>

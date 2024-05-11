@@ -154,7 +154,7 @@ async function getThreadById(threadId) {
     }
 }
 
-async function createComment(threadId, content) {
+async function createComment({threadId, content}) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments`, {
             method: "POST",
@@ -177,7 +177,7 @@ async function createComment(threadId, content) {
     }
 }
 
-async function likeThread(threadId) {
+async function likeThread({threadId}) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/up-vote`, {
             method: "POST",
