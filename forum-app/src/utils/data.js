@@ -105,6 +105,10 @@ async function createThread({title, body, category}) {
     try {
         const response = await fetchWithToken(`${url}/threads`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 title: title,
                 body: body,
@@ -154,6 +158,10 @@ async function createComment(threadId, content) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 content: content
             })
@@ -173,6 +181,10 @@ async function likeThread(threadId) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/up-vote`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
         })
         const result = await response.json();
         if (result.status != "success") {
@@ -189,6 +201,10 @@ async function dislikeThread(threadId) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/down-vote`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
         })
         const result = await response.json();
         if (result.status != "success") {
@@ -205,6 +221,10 @@ async function neutralLikeThread(threadId) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/neutral-vote`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
         })
         const result = await response.json();
         if (result.status != "success") {
@@ -221,6 +241,10 @@ async function likeComment(threadId, commentId) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/up-vote`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
         })
         const result = await response.json();
         if (result.status != "success") {
@@ -237,6 +261,10 @@ async function dislikeComment(threadId, commentId) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/down-vote`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
         })
         const result = await response.json();
         if (result.status != "success") {
@@ -253,6 +281,10 @@ async function neutralLikeComment(threadId, commentId) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/neutral-vote`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
         })
         const result = await response.json();
         if (result.status != "success") {
@@ -295,6 +327,7 @@ export {
     dislikeComment,
     neutralLikeComment,
     getLeaderboards,
+    getAccessToken,
     putAccessToken        
 }
  

@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import UserLeaderboard from "../components/UserLeaderboard";
 import { getLeaderboards } from "../utils/data";
+import { useDispatch, useSelector } from "react-redux";
+import { actionLeaderboard } from "../utils/redux/leaderboard/action";
 
 function Leaderboard() {
-    const [leaderboard, setLeaderboard] = useState([]);
-    
+    const leaderboards = useSelector((state) => state.leaderboard);
+    const dispatch = useDispatch();
+
     useEffect(() => {
         async function fetchLeaderboard() {
             const {data} = await getLeaderboards();
-            setLeaderboard(data.leaderboards);
+            dispatch(actionLeaderboard(data.leaderboards));
         }
         fetchLeaderboard();
-    }, [leaderboard])
+    }, [dispatch])
     return (
         <>
             <Header/>
@@ -25,7 +28,7 @@ function Leaderboard() {
                         <p>Skor</p>
                     </div>
                     <div className="flex flex-col gap-4">
-                        {leaderboard?.map((data, i) => {
+                        {leaderboards?.leaderboard?.map((data, i) => {
                             return(
                                 <UserLeaderboard key={i} name={data.user.name} score={data.score} avatar={data.user.avatar}/>
                             )

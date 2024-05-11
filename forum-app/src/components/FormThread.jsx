@@ -1,12 +1,17 @@
+import { useDispatch } from "react-redux";
 import { createThread } from "../utils/data";
 import { showToast } from "../utils/toast";
 import useInput from "./UseInput";
+import { actionThread } from "../utils/redux/thread/action";
+import { useNavigate } from "react-router";
 
 function FormThread() {
 
     const [title, onTitleChange] = useInput("");
     const [category, onCategoryChange] = useInput("");
     const [body, onBodyChange] = useInput("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -20,8 +25,8 @@ function FormThread() {
         if (category.length === 0)
             return showToast('Gagal membuat diskusi! kategori tidak ada', "white", "red");            
         
-        if (category.length > 8)
-            return showToast('Gagal membuat diskusi! kategori maksimal 8 karakter', "white", "red"); 
+        if (category.length > 16)
+            return showToast('Gagal membuat diskusi! kategori maksimal 16 karakter', "white", "red"); 
         
         if (body.length === 0)
             return showToast('Gagal membuat diskusi! deskripsi tidak ada', "white", "red");            
@@ -29,12 +34,13 @@ function FormThread() {
         if (body.length > 255)
             return showToast('Gagal membuat diskusi! deskripsi maksimal 255 karakter', "white", "red"); 
 
-        const {error, message} = await createThread({title, body, category});
+        const {error, message, data} = await createThread({title, body, category});
         if (error)
             return showToast(`Gagal membuat diskusi! ${message}`, "white", "red");
 
+        dispatch(actionThread(data));
         showToast("Berhasil membuat diskusi!", "white", "green");
-        // then store data to redux
+        navigate('/');
     }
 
     return (

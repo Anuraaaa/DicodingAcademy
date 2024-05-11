@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import useInput from "../components/UseInput"
 import { showToast } from "../utils/toast.js"
 import { loginUser, putAccessToken, registerUser } from "../utils/data.js";
+import { useDispatch } from "react-redux";
+import { actionLogin } from "../utils/redux/auth/action.js";
 
 function FormAuth({ state }) {
     const [email, onEmailChange] = useInput('');
@@ -11,11 +13,11 @@ function FormAuth({ state }) {
     const [username, onUsernameChange] = useInput('');  
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const loginSuccess = ({ token }) => {
         putAccessToken(token);
         showToast('Berhasil login', "white", "green");
-        // then store data to redux
         navigate('/');
     }
 
@@ -42,8 +44,9 @@ function FormAuth({ state }) {
 
             if (error)
                 return showToast(`Gagal login! ${message}`, "white", "red");
-
+            
             loginSuccess(data);
+            dispatch(actionLogin(data));
         }
         else if (state == "register") {
             if (username.length === 0)
