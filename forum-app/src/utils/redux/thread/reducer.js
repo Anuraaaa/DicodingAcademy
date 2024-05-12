@@ -5,6 +5,17 @@ function threadReducer(thread = [], action = {}) {
             thread: action.payload
         };
     }
+    if (action.type === "THREAD_LIKE") {
+        // 
+        const threadData = thread.thread.find((data) => data.id == action.payload.vote.threadId);
+        return {
+            ...threadData,
+            upVotesBy: [
+                ...threadData.upVotesBy,
+                action.payload.vote.userId
+            ]
+        }
+    }
     return thread;
 }
 
@@ -34,9 +45,6 @@ function voteThreadReducer(voteThread = [], action = {}) {
         }
     }
     if (action.type === "NEUTRAL_VOTE_THREAD") {
-        voteThread.filter((vote) => vote.type == 1)?.filter((vote) => vote.voteThread.threadId == action.payload.threadId)
-        voteThread.filter((vote) => vote.type == -1)?.filter((vote) => vote.voteThread.threadId == action.payload.threadId)
-
         return {
             ...voteThread,
             type: 0,

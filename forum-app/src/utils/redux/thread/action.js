@@ -12,13 +12,11 @@ function actionSingleThread(data) {
     }
 }
 
-function actionUpVoteThread(threadId, users) {
+function actionUpVoteThread(data) {
+    // 
     return {
-        type: 'UP_VOTE_THREAD',
-        payload: {
-            threadId: threadId,
-            users: users
-        } 
+        type: 'THREAD_LIKE',
+        payload: data 
     }
 }
 

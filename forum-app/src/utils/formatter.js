@@ -20,7 +20,17 @@ function formatDate(dateString) {
     }
 }
 
+function truncateString(str, maxLength) {
+    if (str.length > maxLength) {
+        return str.substring(0, maxLength) + '...';
+    } else {
+        return str;
+    }
+}
+
+
 export {
     parseHTML,
-    formatDate
+    formatDate,
+    truncateString
 };

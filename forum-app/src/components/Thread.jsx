@@ -1,71 +1,62 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { formatDate, parseHTML } from "../utils/formatter";
+import { formatDate, parseHTML, truncateString } from "../utils/formatter";
 import { useEffect, useState } from "react";
-import { getAllUser, likeThread, neutralLikeThread } from "../utils/data";
-import { useDispatch, useSelector } from "react-redux";
-import { actionDownVoteThread, actionNeutralVoteThread, actionUpVoteThread } from "../utils/redux/thread/action";
+import { getAllUser, likeThread } from "../utils/data";
+import { useDispatch } from "react-redux";
+import { actionDownVoteThread, actionUpVoteThread } from "../utils/redux/thread/action";
 import { showToast } from "../utils/toast";
 
 function Thread({title, body, category, createdAt, totalComments, likes, dislikes, ownerId, id}) {
     const [users, setUsers] = useState([]);
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         async function getUsers() {
             const {data} = await getAllUser();
             setUsers(data.users);
         }
-        function fetchVote() {
-            if (likes.length > 0)
-                dispatch(actionUpVoteThread(id, likes));
-            
-            if (dislikes.length > 0)
-                dispatch(actionDownVoteThread(id, dislikes));
-
-            if (likes.length == 0 && dislikes.length == 0)
-                dispatch(actionNeutralVoteThread(id, null));
-        }
         getUsers();
-        fetchVote();
-    }, [users, likes, dislikes, id, dispatch])
+    }, [users])
 
-    const voteThread = useSelector((state) => state.voteThread);
     
     const filterUser = users?.filter((data) => data.id == ownerId);
 
     const upVoteHandle = async() => {
-        if (voteThread.voteThread.threadId == id && voteThread.type == 0) {
-            const {error, message, data} = await likeThread({threadId: id});
-            if (error)
-                return showToast(`Gagal like thread! ${message}`, "white", "red");
+        const {error, message, data} = await likeThread({threadId: id});
+        if (error)
+            return showToast(`Gagal like thread! ${message}`, "white", "red");
+
+        dispatch(actionUpVoteThread(data));
+        showToast("Berhasil up vote!", "white", "green");
+        // if (voteThread.voteThread.threadId == id && voteThread.type == 0) {
     
-            dispatch(actionUpVoteThread(id, data.userId));
-        }
-        else if (voteThread.voteThread.threadId == id && voteThread.type == 1 || voteThread.type == -1) {
-            const {error, message, data} = await neutralLikeThread({threadId: id});
-            if (error)
-                return showToast(`Gagal neutral like thread! ${message}`, "white", "red");
+        // }
+        // else if (voteThread.voteThread.threadId == id && voteThread.type == 1 || voteThread.type == -1) {
+        //     const {error, message, data} = await neutralLikeThread({threadId: id});
+        //     if (error)
+        //         return showToast(`Gagal neutral like thread! ${message}`, "white", "red");
     
-            dispatch(actionNeutralVoteThread(id, data.userId));
-        }
+        //     dispatch(actionNeutralVoteThread(id, data.userId));
+        // }
     }
 
     const downVoteHandle = async() => {
-        if (voteThread.voteThread.threadId == id && voteThread.type == 0) {
-            const {error, message, data} = await likeThread({threadId: id});
-            if (error)
-                return showToast(`Gagal dislike thread! ${message}`, "white", "red");
+        const {error, message, data} = await likeThread({threadId: id});
+        if (error)
+            return showToast(`Gagal dislike thread! ${message}`, "white", "red");
+
+        dispatch(actionDownVoteThread(id, data.userId));
+        showToast("Berhasil down vote!", "white", "green");
+        // if (voteThread.voteThread.threadId == id && voteThread.type == 0) {
+        // }
+        // else if (voteThread.voteThread.threadId == id && voteThread.type == 1 || voteThread.type == -1) {
+        //     const {error, message, data} = await neutralLikeThread({threadId: id});
+        //     if (error)
+        //         return showToast(`Gagal neutral like thread! ${message}`, "white", "red");
     
-            dispatch(actionDownVoteThread(id, data.userId));
-        }
-        else if (voteThread.voteThread.threadId == id && voteThread.type == 1 || voteThread.type == -1) {
-            const {error, message, data} = await neutralLikeThread({threadId: id});
-            if (error)
-                return showToast(`Gagal neutral like thread! ${message}`, "white", "red");
-    
-            dispatch(actionNeutralVoteThread(id, data.userId));
-        }
+        //     dispatch(actionNeutralVoteThread(id, data.userId));
+        // }
     }
     
     return (
@@ -75,7 +66,7 @@ function Thread({title, body, category, createdAt, totalComments, likes, dislike
                     <p>{category}</p>
                 </div>
                 <h1 className="font-bold text-xl"><Link to={`/single-thread/${id}`}>{title}</Link></h1>
-                <p className="text-md"><Link to={`/single-thread/${id}`}>{parseHTML(body)}</Link></p>
+                <p className="text-md"><Link to={`/single-thread/${id}`}>{parseHTML(truncateString(body, 200))}</Link></p>
                 <div className="flex flex-row gap-4 items-center text-sm">
                     <button className="flex gap-2 items-center" onClick={upVoteHandle}>
                         <span className="material-symbols-outlined">thumb_up</span>
