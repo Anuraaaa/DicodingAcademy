@@ -2,13 +2,14 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { formatDate, parseHTML, truncateString } from "../utils/formatter";
 import { useEffect, useState } from "react";
-import { getAllUser, likeThread } from "../utils/data";
+import { dislikeThread, getAllUser, getUserLoggedIn, likeThread, neutralLikeThread } from "../utils/data";
 import { useDispatch } from "react-redux";
-import { actionDownVoteThread, actionUpVoteThread } from "../utils/redux/thread/action";
+import { actionDownVoteThread, actionNeutralVoteThread, actionUpVoteThread } from "../utils/redux/thread/action";
 import { showToast } from "../utils/toast";
 
 function Thread({title, body, category, createdAt, totalComments, likes, dislikes, ownerId, id}) {
     const [users, setUsers] = useState([]);
+    const [userLoggedIn, setUserLoggedIn] = useState([]);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -16,47 +17,73 @@ function Thread({title, body, category, createdAt, totalComments, likes, dislike
             const {data} = await getAllUser();
             setUsers(data.users);
         }
+        async function getDataUserLoggedIn() {
+            const user = await getUserLoggedIn();
+            setUserLoggedIn(user.data.user);
+        }
         getUsers();
+        getDataUserLoggedIn();
     }, [users])
 
     
     const filterUser = users?.filter((data) => data.id == ownerId);
+    const hasUpVote = likes.find(data => data == userLoggedIn.id);
+    const hasDownVote = dislikes.find(data => data == userLoggedIn.id);
 
     const upVoteHandle = async() => {
-        const {error, message, data} = await likeThread({threadId: id});
-        if (error)
-            return showToast(`Gagal like thread! ${message}`, "white", "red");
-
-        dispatch(actionUpVoteThread(data));
-        showToast("Berhasil up vote!", "white", "green");
-        // if (voteThread.voteThread.threadId == id && voteThread.type == 0) {
+        let hasVote = false;
+        likes.map((data) => {
+            if (userLoggedIn.id === data) {
+                hasVote = true;
+            }
+        })
+        dislikes.map((data) => {
+            if (userLoggedIn.id === data) {
+                hasVote = true;
+            }
+        })
+        if (!hasVote) {            
+            const {error, message, data} = await likeThread({threadId: id});
+            if (error)
+                return showToast(`Gagal up vote thread! ${message}`, "white", "red");
     
-        // }
-        // else if (voteThread.voteThread.threadId == id && voteThread.type == 1 || voteThread.type == -1) {
-        //     const {error, message, data} = await neutralLikeThread({threadId: id});
-        //     if (error)
-        //         return showToast(`Gagal neutral like thread! ${message}`, "white", "red");
-    
-        //     dispatch(actionNeutralVoteThread(id, data.userId));
-        // }
+            dispatch(actionUpVoteThread(data));
+        }
+        else {
+            const {error, message, data} = await neutralLikeThread({threadId: id});
+            if (error)
+                return showToast(`Gagal neutral vote thread! ${message}`, "white", "red");
+            
+            dispatch(actionNeutralVoteThread(data));
+        }        
     }
 
     const downVoteHandle = async() => {
-        const {error, message, data} = await likeThread({threadId: id});
-        if (error)
-            return showToast(`Gagal dislike thread! ${message}`, "white", "red");
-
-        dispatch(actionDownVoteThread(id, data.userId));
-        showToast("Berhasil down vote!", "white", "green");
-        // if (voteThread.voteThread.threadId == id && voteThread.type == 0) {
-        // }
-        // else if (voteThread.voteThread.threadId == id && voteThread.type == 1 || voteThread.type == -1) {
-        //     const {error, message, data} = await neutralLikeThread({threadId: id});
-        //     if (error)
-        //         return showToast(`Gagal neutral like thread! ${message}`, "white", "red");
+        let hasVote = false;
+        likes.map((data) => {
+            if (userLoggedIn.id === data) {
+                hasVote = true;
+            }
+        })
+        dislikes.map((data) => {
+            if (userLoggedIn.id === data) {
+                hasVote = true;
+            }
+        })
+        if (!hasVote) {            
+            const {error, message, data} = await dislikeThread({threadId: id});
+            if (error)
+                return showToast(`Gagal down vote thread! ${message}`, "white", "red");
     
-        //     dispatch(actionNeutralVoteThread(id, data.userId));
-        // }
+            dispatch(actionDownVoteThread(data));
+        }
+        else {
+            const {error, message, data} = await neutralLikeThread({threadId: id});
+            if (error)
+                return showToast(`Gagal neutral vote thread! ${message}`, "white", "red");
+            
+            dispatch(actionNeutralVoteThread(data));
+        }        
     }
     
     return (
@@ -69,11 +96,11 @@ function Thread({title, body, category, createdAt, totalComments, likes, dislike
                 <p className="text-md"><Link to={`/single-thread/${id}`}>{parseHTML(truncateString(body, 200))}</Link></p>
                 <div className="flex flex-row gap-4 items-center text-sm">
                     <button className="flex gap-2 items-center" onClick={upVoteHandle}>
-                        <span className="material-symbols-outlined">thumb_up</span>
+                        <span className="material-symbols-outlined" style={{ color: `${hasUpVote? "blue" : "black"}` }}>thumb_up</span>
                         <span>{likes.length}</span>
                     </button>                        
                     <button className="flex gap-2 items-center" onClick={downVoteHandle}>
-                        <span className="material-symbols-outlined">thumb_down</span>
+                        <span className="material-symbols-outlined" style={{ color: `${hasDownVote? "red" : "black"}` }}>thumb_down</span>
                         <span>{dislikes.length}</span>
                     </button>                        
                     <button className="flex gap-2 items-center">

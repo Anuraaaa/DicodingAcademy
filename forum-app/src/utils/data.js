@@ -197,7 +197,7 @@ async function likeThread({threadId}) {
     }
 }
 
-async function dislikeThread(threadId) {
+async function dislikeThread({threadId}) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/down-vote`, {
             method: "POST",
@@ -217,7 +217,7 @@ async function dislikeThread(threadId) {
     }
 }
 
-async function neutralLikeThread(threadId) {
+async function neutralLikeThread({threadId}) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/neutral-vote`, {
             method: "POST",

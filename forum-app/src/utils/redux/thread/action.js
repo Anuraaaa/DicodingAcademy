@@ -13,30 +13,23 @@ function actionSingleThread(data) {
 }
 
 function actionUpVoteThread(data) {
-    // 
     return {
-        type: 'THREAD_LIKE',
+        type: 'UP_VOTE_THREAD',
         payload: data 
     }
 }
 
-function actionDownVoteThread(threadId, users) {
+function actionDownVoteThread(data) {
     return {
         type: 'DOWN_VOTE_THREAD',
-        payload: {
-            threadId: threadId,
-            users: users
-        } 
+        payload: data 
     }
 }
 
-function actionNeutralVoteThread(threadId, users) {
+function actionNeutralVoteThread(data) {
     return {
         type: 'NEUTRAL_VOTE_THREAD',
-        payload: {
-            threadId: threadId,
-            users: users
-        } 
+        payload: data 
     }
 }
 
