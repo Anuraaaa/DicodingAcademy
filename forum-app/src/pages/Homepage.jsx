@@ -26,23 +26,23 @@ function Homepage() {
     return (
         <>
             <Header/>
-            <div className="container pt-24 mx-auto">
+            <div className="container mt-4 mb-32 mx-auto">
                 <HeaderThread/>
                 {threads?.thread?.map((data, i) => {
                     return (
                         <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} likes={data.upVotesBy} dislikes={data.downVotesBy} ownerId={data.ownerId} id={data.id}/>
                     )
                 })}
-            </div>
-            {isAuthenticate &&             
-                <>
-                    <div className="relative">
-                        <div className="fixed bottom-28 right-[5%]">
-                            <Link to={"/new"} className="bg-gray-700 text-white p-2 rounded-full material-symbols-outlined">add</Link>
+                {isAuthenticate &&             
+                    <>
+                        <div className="relative">
+                            <div className="fixed bottom-28 right-[5%]">
+                                <Link to={"/new"} className="bg-gray-700 text-white p-2 rounded-full material-symbols-outlined">add</Link>
+                            </div>
                         </div>
-                    </div>
-                </>
-            }
+                    </>
+                }
+            </div>
             <Navigation/>
         </>
     )

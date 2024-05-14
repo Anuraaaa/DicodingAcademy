@@ -67,6 +67,37 @@ function singleThreadReducer(detailThread = [], action = {}) {
             detailThread: action.payload
         };
     }
+    if (action.type === "UP_VOTE_SINGLE_THREAD") {
+        if (detailThread.detailThread.id === action.payload.vote.threadId) {
+            return {
+                ...detailThread.detailThread,
+                upVotesBy: [
+                    ...detailThread.detailThread.upVotesBy,
+                    action.payload.vote.userId
+                ]
+            };
+        }
+    }
+    if (action.type === "DOWN_VOTE_SINGLE_THREAD") {
+        if (detailThread.detailThread.id === action.payload.vote.threadId) {
+            return {
+                ...detailThread.detailThread,
+                downVotesBy: [
+                    ...detailThread.detailThread.downVotesBy,
+                    action.payload.vote.userId
+                ]
+            };
+        }
+    }
+    if (action.type === "NEUTRAL_VOTE_SINGLE_THREAD") {
+        if (detailThread.detailThread.id === action.payload.vote.threadId) {
+            return {
+                ...detailThread.detailThread,
+                upVotesBy: detailThread.detailThread.upVotesBy.filter(vote => vote !== action.payload.vote.userId),
+                downVotesBy: detailThread.detailThread.downVotesBy.filter(vote => vote !== action.payload.vote.userId)
+            };
+        }
+    }
     return detailThread;
 }
 

@@ -33,4 +33,35 @@ function actionNeutralVoteThread(data) {
     }
 }
 
-export {actionThread, actionSingleThread, actionUpVoteThread, actionDownVoteThread, actionNeutralVoteThread}
+function actionUpVoteSingleThread(data) {
+    return {
+        type: 'UP_VOTE_SINGLE_THREAD',
+        payload: data 
+    }
+}
+
+function actionDownVoteSingleThread(data) {
+    return {
+        type: 'DOWN_VOTE_SINGLE_THREAD',
+        payload: data 
+    }
+}
+
+function actionNeutralVoteSingleThread(data) {
+    return {
+        type: 'NEUTRAL_VOTE_SINGLE_THREAD',
+        payload: data 
+    }
+}
+
+
+export {
+    actionThread, 
+    actionSingleThread, 
+    actionUpVoteThread, 
+    actionDownVoteThread, 
+    actionNeutralVoteThread,
+    actionUpVoteSingleThread,
+    actionDownVoteSingleThread,
+    actionNeutralVoteSingleThread
+}

@@ -22,7 +22,7 @@ function Navigation() {
         if (accessToken) {
             dispatch(actionLogin(accessToken));
         }
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="bg-gray-700 fixed bottom-0 w-full">

@@ -21,7 +21,7 @@ function Leaderboard() {
         <>
             <Header/>
             <div className="container mx-auto">
-                <div className="bg-gray-100 p-8 flex flex-col gap-4 rounded shadow-lg pt-24">
+                <div className="bg-gray-100 p-8 flex flex-col gap-4 rounded shadow-lg mt-8 mb-32">
                     <h1 className="font-bold">Klasmen Pengguna Aktif</h1>
                     <div className="flex justify-between">
                         <p>Pengguna</p>

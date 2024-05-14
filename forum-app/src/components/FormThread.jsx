@@ -42,7 +42,7 @@ function FormThread() {
     return (
         <>
             <div className="container px-8 py-16 mx-auto">
-            <form className="flex flex-col border border-gray-300 p-8 gap-4 rounded mt-24" onSubmit={handleSubmit}>
+            <form className="flex flex-col border border-gray-300 p-8 gap-4 rounded mt-4" onSubmit={handleSubmit}>
                     <h1 className="text-center font-bold">Buat Diskusi Baru</h1>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="title">Judul</label>

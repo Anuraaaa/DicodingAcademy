@@ -237,7 +237,7 @@ async function neutralLikeThread({threadId}) {
     }
 }
 
-async function likeComment(threadId, commentId) {
+async function likeComment({threadId, commentId}) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/up-vote`, {
             method: "POST",
@@ -257,7 +257,7 @@ async function likeComment(threadId, commentId) {
     }
 }
 
-async function dislikeComment(threadId, commentId) {
+async function dislikeComment({threadId, commentId}) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/down-vote`, {
             method: "POST",
@@ -277,7 +277,7 @@ async function dislikeComment(threadId, commentId) {
     }
 }
 
-async function neutralLikeComment(threadId, commentId) {
+async function neutralLikeComment({threadId, commentId}) {
     try {
         const response = await fetchWithToken(`${url}/threads/${threadId}/comments/${commentId}/neutral-vote`, {
             method: "POST",
