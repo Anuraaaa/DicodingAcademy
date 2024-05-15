@@ -58,7 +58,6 @@ function SingleThread() {
             return showToast(`Gagal menambahkan komentar! ${message}`);
 
         showToast("Berhasil menambahkan komentar!", "white", "green");
-        // dispatch(actionComment(data));
     }
 
     const hasUpVote = thread.detailThread?.upVotesBy.find(data => data == userLoggedIn.id);
@@ -78,14 +77,14 @@ function SingleThread() {
         if (!hasVote) {            
             const {error, message, data} = await likeThread({threadId: thread.detailThread?.id});
             if (error)
-                return showToast(`Gagal up vote thread! ${message}`, "white", "red");
+                return showToast(`Gagal up vote single thread! ${message}`, "white", "red");
     
             dispatch(actionUpVoteSingleThread(data));
         }
         else {
             const {error, message, data} = await neutralLikeThread({threadId: thread.detailThread?.id});
             if (error)
-                return showToast(`Gagal neutral vote thread! ${message}`, "white", "red");
+                return showToast(`Gagal neutral vote single thread! ${message}`, "white", "red");
             
             dispatch(actionNeutralVoteSingleThread(data));
         }        
@@ -106,14 +105,14 @@ function SingleThread() {
         if (!hasVote) {            
             const {error, message, data} = await dislikeThread({threadId: thread.detailThread?.id});
             if (error)
-                return showToast(`Gagal down vote thread! ${message}`, "white", "red");
+                return showToast(`Gagal down vote single thread! ${message}`, "white", "red");
     
             dispatch(actionDownVoteSingleThread(data));
         }
         else {
             const {error, message, data} = await neutralLikeThread({threadId: thread.detailThread?.id});
             if (error)
-                return showToast(`Gagal neutral vote thread! ${message}`, "white", "red");
+                return showToast(`Gagal neutral vote single thread! ${message}`, "white", "red");
             
             dispatch(actionNeutralVoteSingleThread(data));
         }        
@@ -155,7 +154,7 @@ function SingleThread() {
                     }
                     <h1 className="font-semibold">Komentar ({comments?.comment?.length})</h1>
                     {comments?.comment?.map((data, i) => {
-                        return <Comment key={i} name={data.owner.name} comment={parseHTML(data.content)} avatar={data.owner.avatar} createdAt={data.createdAt} likes={data.upVotesBy} dislikes={data.downVotesBy}/>
+                        return <Comment key={i} name={data.owner.name} id={data.id} threadId={thread?.detailThread?.id} comment={parseHTML(data.content)} avatar={data.owner.avatar} createdAt={data.createdAt} likes={data.upVotesBy} dislikes={data.downVotesBy}/>
                     })}
                 </div>
             </div>
