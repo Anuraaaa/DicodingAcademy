@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import HeaderThread from "../components/HeaderThread";
 import Navigation from "../components/Navigation";
@@ -10,6 +10,7 @@ import { actionThread } from "../utils/redux/thread/action.js";
 import { getAllThread } from "../utils/data.js";
 
 function Homepage() {
+    const [filteredThreads, setFilteredThreads] = useState([]);
     const auth = useSelector((state) => state.auth);
     const threads = useSelector((state) => state.thread);
     const isAuthenticate = auth?.isAuth;
@@ -19,6 +20,7 @@ function Homepage() {
         async function fetchThread() {
             const { data } = await getAllThread();
             dispatch(actionThread(data.threads));
+            setFilteredThreads(data.threads);        
         }
         fetchThread();    
     }, [dispatch]);
@@ -27,8 +29,8 @@ function Homepage() {
         <>
             <Header/>
             <div className="container mt-4 mb-32 mx-auto">
-                <HeaderThread/>
-                {threads?.thread?.map((data, i) => {
+                <HeaderThread threads={threads.thread} setFilteredThreads={setFilteredThreads}/>
+                {filteredThreads?.map((data, i) => {
                     return (
                         <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} likes={data.upVotesBy} dislikes={data.downVotesBy} ownerId={data.ownerId} id={data.id}/>
                     )
