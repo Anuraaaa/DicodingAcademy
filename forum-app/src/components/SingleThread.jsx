@@ -10,11 +10,13 @@ import { actionDownVoteSingleThread, actionNeutralVoteSingleThread, actionSingle
 import { actionComment } from "../utils/redux/comment/action";
 import useInput from "./UseInput";
 import { showToast } from "../utils/toast";
+import { Skeleton } from "./ui/skeleton";
 
 function SingleThread() {
     const { threadId } = useParams();
     const [users, setUsers] = useState([]);
     const [userLoggedIn, setUserLoggedIn] = useState([]);
+    const [loading, setLoading] = useState(true);
     const auth = useSelector((state) => state.auth);
     const isAuthenticate = auth?.isAuth;
     const dispatch = useDispatch();
@@ -22,10 +24,21 @@ function SingleThread() {
     
     useEffect(() => {
         async function fetchThread(threadId) {
-            const {data} = await getThreadById(threadId);
-            dispatch(actionSingleThread(data.detailThread));
-            dispatch(actionComment(data.detailThread.comments));
+            setLoading(true);
+            try {
+                const {data} = await getThreadById(threadId);
+                dispatch(actionSingleThread(data.detailThread));
+                dispatch(actionComment(data.detailThread.comments));                
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
         }
+        fetchThread(threadId);
+    }, [threadId, dispatch])
+
+    useEffect(() => {
         async function fetchUser() {
             const {data} = await getAllUser();
             setUsers(data.users);
@@ -34,11 +47,11 @@ function SingleThread() {
             const user = await getUserLoggedIn();
             setUserLoggedIn(user.data.user);
         }
-        fetchThread(threadId);
         fetchUser();
         fetchUserLoggedIn();
-    }, [threadId, dispatch, users])
-    
+
+    }, [users])
+
     const thread = useSelector((state) => state.detailThread);
     const filterUser = users?.filter((data) => data.id == thread?.detailThread?.owner?.id);
     const comments = useSelector((state) => state.comment);
@@ -123,39 +136,73 @@ function SingleThread() {
             <Header/>
             <div className="container mx-auto">
                 <div className="flex flex-col gap-4 border-b-1 border-b-gray-200 p-8 shadow-lg mt-4 mb-32">
-                    <div className="border border-dashed border-gray-500 rounded w-[10%] text-center text-sm">
-                        <p>{thread?.detailThread?.category}</p>
-                    </div>
-                    <h1 className="font-bold text-2xl">{thread?.detailThread?.title}</h1>
-                    <p className="text-md">{parseHTML(thread?.detailThread?.body)}</p>
-                    <div className="flex flex-row gap-4 items-center text-sm">
-                        <button className="flex gap-2 items-center">
-                            <span className="material-symbols-outlined" onClick={upVoteHandle} style={{ color: `${hasUpVote? "blue" : "black"}` }}>thumb_up</span>
-                            <span>{thread?.detailThread?.upVotesBy?.length}</span>
-                        </button>                        
-                        <button className="flex gap-2 items-center">
-                            <span className="material-symbols-outlined" onClick={downVoteHandle} style={{ color: `${hasDownVote? "red" : "black"}` }}>thumb_down</span>
-                            <span>{thread?.detailThread?.downVotesBy?.length}</span>
-                        </button>                        
-                        <p>{formatDate(thread?.detailThread?.createdAt)}</p>
-                        <div className="flex items-center gap-2">                            
-                            <img src={filterUser[0]?.avatar} alt={filterUser[0]?.name} className="w-5 rounded-full"/>
-                            <p>Dibuat oleh {filterUser[0]?.name}</p>
+                    {loading? 
+                        <Skeleton className="h-[16px] w-full rounded-full"/> 
+                    : 
+                        <div className="border border-dashed border-gray-500 rounded w-[10%] text-center text-sm">
+                            <p>{thread?.detailThread?.category}</p>
                         </div>
+                    } 
+                    {loading? <Skeleton className="h-[24px] w-full rounded-full"/> : <h1 className="font-bold text-2xl">{thread?.detailThread?.title}</h1>}
+                    {loading? <Skeleton className="h-[64px] w-full rounded-full"/> : <p className="text-md">{parseHTML(thread?.detailThread?.body)}</p>}
+                    <div className="flex flex-row gap-4 items-center text-sm">
+                        {loading?
+                            <Skeleton className="h-[16px] w-full rounded-full"/>                        
+                        :
+                            <>
+                                <button className="flex gap-2 items-center">
+                                    <span className="material-symbols-outlined" onClick={upVoteHandle} style={{ color: `${hasUpVote? "blue" : "black"}` }}>thumb_up</span>
+                                    <span>{thread?.detailThread?.upVotesBy?.length}</span>
+                                </button>                        
+                                <button className="flex gap-2 items-center">
+                                    <span className="material-symbols-outlined" onClick={downVoteHandle} style={{ color: `${hasDownVote? "red" : "black"}` }}>thumb_down</span>
+                                    <span>{thread?.detailThread?.downVotesBy?.length}</span>
+                                </button>                        
+                                <p>{formatDate(thread?.detailThread?.createdAt)}</p>
+                                <div className="flex items-center gap-2">                            
+                                    <img src={filterUser[0]?.avatar} alt={filterUser[0]?.name} className="w-5 rounded-full"/>
+                                    <p>Dibuat oleh {filterUser[0]?.name}</p>
+                                </div>
+                            </>
+                        }
                     </div>
                     {isAuthenticate &&
                         <>                        
                             <form className="flex flex-col gap-4" onSubmit={handleCommentSubmit}>
                                 <h1 className="font-semibold">Beri Komentar</h1>
-                                <textarea id="comment" className="h-32 w-full p-2 border border-gray-500 rounded resize-none" value={valueComment} onChange={onCommentChange}></textarea>
-                                <button className="bg-gray-700 text-white p-2 rounded">Kirim</button>
+                                {loading? 
+                                    <>
+                                        <Skeleton className="h-32 w-full rounded-xl"/>
+                                        <Skeleton className="h-[16px] w-full rounded-xl"/>
+                                    </>                            
+                                    :
+                                    <>
+                                        <textarea id="comment" className="h-32 w-full p-2 border border-gray-500 rounded resize-none" value={valueComment} onChange={onCommentChange}></textarea>
+                                        <button className="bg-gray-700 text-white p-2 rounded">Kirim</button>
+                                    </>
+                                }
                             </form>
                         </>
                     }
                     <h1 className="font-semibold">Komentar ({comments?.comment?.length})</h1>
-                    {comments?.comment?.map((data, i) => {
-                        return <Comment key={i} name={data.owner.name} id={data.id} threadId={thread?.detailThread?.id} comment={parseHTML(data.content)} avatar={data.owner.avatar} createdAt={data.createdAt} likes={data.upVotesBy} dislikes={data.downVotesBy}/>
-                    })}
+
+                    {loading? 
+                        <div className="flex flex-col gap-4">
+                            {
+                                Array.from({ length: 5 }).map((_, index) => (
+                                    <div key={index} className="flex flex-col gap-2">
+                                        <Skeleton className="h-[16px] w-[10%] rounded-xl"/>
+                                        <Skeleton className="h-[24px] w-full rounded-xl"/>
+                                        <Skeleton className="h-[16px] w-full rounded-xl"/>                    
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        :
+                        comments?.comment?.map((data, i) => {
+                            return <Comment key={i} name={data.owner.name} id={data.id} threadId={thread?.detailThread?.id} comment={parseHTML(data.content)} avatar={data.owner.avatar} createdAt={data.createdAt} likes={data.upVotesBy} dislikes={data.downVotesBy}/>
+                        })                        
+                    }
                 </div>
             </div>
             <Navigation/>
