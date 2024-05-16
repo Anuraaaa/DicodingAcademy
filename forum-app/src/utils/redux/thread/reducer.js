@@ -1,3 +1,12 @@
+function threadFilterReducer(filteredThread = [], action = {}) {
+    if (action.type === "THREAD_FILTER") {
+        return {
+            ...filteredThread,
+            filteredThread: action.payload
+        };
+    }
+}
+
 function threadReducer(thread = [], action = {}) {
     if (action.type === "THREAD_CREATE") {
         return {
@@ -101,4 +110,4 @@ function singleThreadReducer(detailThread = [], action = {}) {
     return detailThread;
 }
 
-export {threadReducer, singleThreadReducer}
+export {threadReducer, threadFilterReducer, singleThreadReducer}

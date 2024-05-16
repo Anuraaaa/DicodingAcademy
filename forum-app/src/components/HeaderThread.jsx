@@ -1,16 +1,19 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
+import { actionFilterThread } from "../utils/redux/thread/action";
 
-function HeaderThread({ threads, setFilteredThreads }) {
+function HeaderThread({ threads }) {
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const dispatch = useDispatch();
 
     const filterCategory = (category) => {
         if (selectedCategory === category) {
-            setFilteredThreads(threads);
+            dispatch(actionFilterThread(threads));
             setSelectedCategory(null);
         } else {
             const filtered = threads.filter(thread => thread.category === category);
-            setFilteredThreads(filtered);
+            dispatch(actionFilterThread(filtered));
             setSelectedCategory(category);
         }
     }
@@ -35,8 +38,7 @@ function HeaderThread({ threads, setFilteredThreads }) {
 }
 
 HeaderThread.propTypes = {
-    threads: PropTypes.array.isRequired,
-    setFilteredThreads: PropTypes.func.isRequired
+    threads: PropTypes.array.isRequired
 }
 
 export default HeaderThread;

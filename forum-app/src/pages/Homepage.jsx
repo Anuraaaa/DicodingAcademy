@@ -6,12 +6,12 @@ import Thread from "../components/Thread";
 import { parseHTML } from "../utils/formatter.js";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { actionThread } from "../utils/redux/thread/action.js";
+import { actionFilterThread, actionThread } from "../utils/redux/thread/action.js";
 import { getAllThread } from "../utils/data.js";
 import { Skeleton } from "../components/ui/skeleton.jsx";
 
 function Homepage() {
-    const [filteredThreads, setFilteredThreads] = useState([]);
+    const filteredThreads = useSelector((state) => state.filteredThread);
     const [loading, setLoading] = useState(true);
     const auth = useSelector((state) => state.auth);
     const threads = useSelector((state) => state.thread);
@@ -24,7 +24,7 @@ function Homepage() {
             try {
                 const { data } = await getAllThread();
                 dispatch(actionThread(data.threads));
-                setFilteredThreads(data.threads);                        
+                dispatch(actionFilterThread(data.threads));                        
             } catch (error) {
                 console.log(error);
             } finally {
@@ -49,8 +49,8 @@ function Homepage() {
                     ))
                     : 
                     <>
-                        <HeaderThread threads={threads.thread} setFilteredThreads={setFilteredThreads}/>
-                        {filteredThreads?.map((data, i) => {
+                        <HeaderThread threads={threads.thread}/>
+                        {filteredThreads?.filteredThread.map((data, i) => {
                             return (
                                 <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} likes={data.upVotesBy} dislikes={data.downVotesBy} ownerId={data.ownerId} id={data.id}/>
                             )

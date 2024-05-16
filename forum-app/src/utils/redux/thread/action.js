@@ -5,6 +5,13 @@ function actionThread(data) {
     }
 }
 
+function actionFilterThread(data) {
+    return {
+        type: 'THREAD_FILTER',
+        payload: data
+    }
+}
+
 function actionSingleThread(data) {
     return {
         type: 'SINGLE_THREAD_CREATE',
@@ -57,6 +64,7 @@ function actionNeutralVoteSingleThread(data) {
 
 export {
     actionThread, 
+    actionFilterThread,
     actionSingleThread, 
     actionUpVoteThread, 
     actionDownVoteThread, 
