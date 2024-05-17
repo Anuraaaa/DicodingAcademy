@@ -9,8 +9,8 @@ import { showToast } from "../utils/toast";
 function Thread({title, body, category, createdAt, totalComments, likes, dislikes, ownerId, id, users, userLoggedIn}) {
     const dispatch = useDispatch();
     const filterUser = users.filter((data) => data.id == ownerId);
-    const hasUpVote = likes.find(data => data == userLoggedIn.id);
-    const hasDownVote = dislikes.find(data => data == userLoggedIn.id);
+    const hasUpVote = likes.find(data => data == userLoggedIn?.id);
+    const hasDownVote = dislikes.find(data => data == userLoggedIn?.id);
 
     const upVoteHandle = async() => {
         let hasVote = false;
