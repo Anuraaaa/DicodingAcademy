@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import Notfound from "./pages/Notfound";
 import Register from "./pages/Register";
-import SingleThread from "./components/SingleThread";
+import SingleThread from "./pages/SingleThread";
 import Leaderboard from "./pages/Leaderboard";
 import AddThread from "./pages/AddThread";
 

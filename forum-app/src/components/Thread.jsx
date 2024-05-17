@@ -1,32 +1,14 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { formatDate, parseHTML, truncateString } from "../utils/formatter";
-import { useEffect, useState } from "react";
-import { dislikeThread, getAllUser, getUserLoggedIn, likeThread, neutralLikeThread } from "../utils/data";
+import { dislikeThread, likeThread, neutralLikeThread } from "../utils/data";
 import { useDispatch } from "react-redux";
 import { actionDownVoteThread, actionNeutralVoteThread, actionUpVoteThread } from "../utils/redux/thread/action";
 import { showToast } from "../utils/toast";
 
-function Thread({title, body, category, createdAt, totalComments, likes, dislikes, ownerId, id}) {
-    const [users, setUsers] = useState([]);
-    const [userLoggedIn, setUserLoggedIn] = useState([]);
+function Thread({title, body, category, createdAt, totalComments, likes, dislikes, ownerId, id, users, userLoggedIn}) {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        async function getUsers() {
-            const {data} = await getAllUser();
-            setUsers(data.users);
-        }
-        async function getDataUserLoggedIn() {
-            const user = await getUserLoggedIn();
-            setUserLoggedIn(user.data.user);
-        }
-        getUsers();
-        getDataUserLoggedIn();
-    }, [users])
-
-    
-    const filterUser = users?.filter((data) => data.id == ownerId);
+    const filterUser = users.filter((data) => data.id == ownerId);
     const hasUpVote = likes.find(data => data == userLoggedIn.id);
     const hasDownVote = dislikes.find(data => data == userLoggedIn.id);
 
@@ -124,7 +106,14 @@ Thread.propTypes = {
     likes: PropTypes.array.isRequired,
     dislikes: PropTypes.array.isRequired,
     ownerId: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    users: PropTypes.array.isRequired,
+    userLoggedIn: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        avatar: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired
+    })
 }
 
 export default Thread;

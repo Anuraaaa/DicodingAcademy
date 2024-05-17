@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { dislikeComment, getUserLoggedIn, likeComment, neutralLikeComment } from '../utils/data';
 import { showToast } from '../utils/toast';
 import { useDispatch } from 'react-redux';
-import { actionDownVoteComment, actionNeutralVoteComment, actionUpVoteComment } from '../utils/redux/comment/action';
+import { actionDownVoteComment, actionNeutralVoteComment, actionUpVoteComment } from '../utils/redux/thread/action';
 
 function Comment({name, id, threadId, comment, avatar, createdAt, likes, dislikes}) {
     const [userLoggedIn, setUserLoggedIn] = useState([]);

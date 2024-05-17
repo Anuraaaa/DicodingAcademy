@@ -1,7 +1,7 @@
 import { authReducer } from "./auth/reducer";
-import { commentReducer } from "./comment/reducer";
 import { leaderboardReducer } from "./leaderboard/reducer";
 import { singleThreadReducer, threadFilterReducer, threadReducer } from "./thread/reducer";
+import { userLoggedInReducer, userReducer } from "./user/reducer";
 
 function rootReducer(state = {}, action = {}) {
     return {
@@ -9,8 +9,9 @@ function rootReducer(state = {}, action = {}) {
         thread: threadReducer(state.thread, action),
         filteredThread: threadFilterReducer(state.filteredThread, action),
         detailThread: singleThreadReducer(state.detailThread, action),
-        comment: commentReducer(state.comment, action),
-        leaderboard: leaderboardReducer(state.leaderboard, action)
+        leaderboard: leaderboardReducer(state.leaderboard, action),
+        user: userReducer(state.user, action),
+        userLoggedIn: userLoggedInReducer(state.userLoggedIn, action)
     }
 }
 

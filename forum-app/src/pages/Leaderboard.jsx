@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import UserLeaderboard from "../components/UserLeaderboard";
-import { getLeaderboards } from "../utils/data";
 import { useDispatch, useSelector } from "react-redux";
-import { actionLeaderboard } from "../utils/redux/leaderboard/action";
+import { actionFetchLeaderboard } from "../utils/redux/leaderboard/action";
 import { Skeleton } from "../components/ui/skeleton";
 
 function Leaderboard() {
@@ -13,11 +12,10 @@ function Leaderboard() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        async function fetchLeaderboard() {
+        function fetchLeaderboard() {
             setLoading(true);
             try {
-                const {data} = await getLeaderboards();
-                dispatch(actionLeaderboard(data.leaderboards));                
+                dispatch(actionFetchLeaderboard());
             } catch (error) {
                 console.log(error);
             } finally {

@@ -6,25 +6,21 @@ import Thread from "../components/Thread";
 import { parseHTML } from "../utils/formatter.js";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { actionFilterThread, actionThread } from "../utils/redux/thread/action.js";
-import { getAllThread } from "../utils/data.js";
+import { actionFetchThread } from "../utils/redux/thread/action.js";
 import { Skeleton } from "../components/ui/skeleton.jsx";
+import { actionGetUser, actionGetUserLoggedIn } from "../utils/redux/user/action.js";
 
 function Homepage() {
-    const filteredThreads = useSelector((state) => state.filteredThread);
     const [loading, setLoading] = useState(true);
-    const auth = useSelector((state) => state.auth);
-    const threads = useSelector((state) => state.thread);
-    const isAuthenticate = auth?.isAuth;
     const dispatch = useDispatch();
-
+    
     useEffect(() => {
-        async function fetchThread() {
+        function fetchThread() {
             setLoading(true);
             try {
-                const { data } = await getAllThread();
-                dispatch(actionThread(data.threads));
-                dispatch(actionFilterThread(data.threads));                        
+                dispatch(actionGetUser());
+                dispatch(actionGetUserLoggedIn());
+                dispatch(actionFetchThread());
             } catch (error) {
                 console.log(error);
             } finally {
@@ -33,6 +29,13 @@ function Homepage() {
         }
         fetchThread();    
     }, [dispatch]);
+    
+    const filteredThreads = useSelector((state) => state.filteredThread);
+    const auth = useSelector((state) => state.auth);
+    const threads = useSelector((state) => state.thread);
+    const isAuthenticate = auth?.isAuth;
+    const users = useSelector((state) => state.user);
+    const userLoggedIn = useSelector((state) => state.userLoggedIn);
 
     return (
         <>
@@ -49,10 +52,10 @@ function Homepage() {
                     ))
                     : 
                     <>
-                        <HeaderThread threads={threads.thread}/>
-                        {filteredThreads?.filteredThread.map((data, i) => {
+                        <HeaderThread threads={threads.thread || []}/>
+                        {filteredThreads?.filteredThread?.map((data, i) => {
                             return (
-                                <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} likes={data.upVotesBy} dislikes={data.downVotesBy} ownerId={data.ownerId} id={data.id}/>
+                                <Thread key={i} title={data.title} body={parseHTML(data.body)} category={data.category} createdAt={data.createdAt} totalComments={data.totalComments} likes={data.upVotesBy} dislikes={data.downVotesBy} ownerId={data.ownerId} id={data.id} users={users.user || []} userLoggedIn={userLoggedIn.userLoggedIn}/>
                             )
                         })}
                     </>
