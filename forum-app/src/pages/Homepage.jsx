@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "../components/Header";
 import HeaderThread from "../components/HeaderThread";
 import Navigation from "../components/Navigation";
@@ -9,27 +9,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionFetchThread } from "../utils/redux/thread/action.js";
 import { Skeleton } from "../components/ui/skeleton.jsx";
 import { actionGetUser, actionGetUserLoggedIn } from "../utils/redux/user/action.js";
+import Loading from "../components/Loading.jsx";
 
 function Homepage() {
-    const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
     
     useEffect(() => {
-        function fetchThread() {
-            setLoading(true);
-            try {
-                dispatch(actionGetUser());
-                dispatch(actionGetUserLoggedIn());
-                dispatch(actionFetchThread());
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchThread();    
+        dispatch(actionGetUser());
+        dispatch(actionGetUserLoggedIn());
+        dispatch(actionFetchThread());
     }, [dispatch]);
     
+    const loading = useSelector((state) => state.loading.loading);
     const filteredThreads = useSelector((state) => state.filteredThread);
     const auth = useSelector((state) => state.auth);
     const threads = useSelector((state) => state.thread);
@@ -40,6 +31,7 @@ function Homepage() {
     return (
         <>
             <Header/>
+            <Loading/>
             <div className="container mt-4 mb-32 mx-auto">
                 {loading ?
                     Array.from({ length: 5 }).map((_, index) => (

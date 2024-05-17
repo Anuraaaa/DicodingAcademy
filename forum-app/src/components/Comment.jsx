@@ -1,22 +1,12 @@
 import PropTypes from 'prop-types';
 import { formatDate, parseHTML } from '../utils/formatter';
-import { useEffect, useState } from 'react';
-import { dislikeComment, getUserLoggedIn, likeComment, neutralLikeComment } from '../utils/data';
+import { dislikeComment, likeComment, neutralLikeComment } from '../utils/data';
 import { showToast } from '../utils/toast';
 import { useDispatch } from 'react-redux';
 import { actionDownVoteComment, actionNeutralVoteComment, actionUpVoteComment } from '../utils/redux/thread/action';
 
-function Comment({name, id, threadId, comment, avatar, createdAt, likes, dislikes}) {
-    const [userLoggedIn, setUserLoggedIn] = useState([]);
+function Comment({name, id, threadId, comment, avatar, createdAt, likes, dislikes, userLoggedIn}) {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        async function fetchUserLoggedIn() {
-            const user = await getUserLoggedIn();
-            setUserLoggedIn(user.data.user);
-        }
-        fetchUserLoggedIn();
-    }, [])
 
     const hasUpVote = likes.find(data => data == userLoggedIn.id);
     const hasDownVote = dislikes.find(data => data == userLoggedIn.id);
@@ -109,7 +99,13 @@ Comment.propTypes = {
     avatar: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     likes: PropTypes.array.isRequired,
-    dislikes: PropTypes.array.isRequired    
+    dislikes: PropTypes.array.isRequired,
+    userLoggedIn: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        avatar: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired
+    })    
 }
 
 export default Comment;

@@ -1,32 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import UserLeaderboard from "../components/UserLeaderboard";
 import { useDispatch, useSelector } from "react-redux";
 import { actionFetchLeaderboard } from "../utils/redux/leaderboard/action";
 import { Skeleton } from "../components/ui/skeleton";
+import Loading from "../components/Loading";
 
 function Leaderboard() {
-    const [loading, setLoading] = useState(true);
-    const leaderboards = useSelector((state) => state.leaderboard);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();    
 
     useEffect(() => {
-        function fetchLeaderboard() {
-            setLoading(true);
-            try {
-                dispatch(actionFetchLeaderboard());
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchLeaderboard();
+        dispatch(actionFetchLeaderboard());
     }, [dispatch])
+
+    const loading = useSelector((state) => state.loading.loading);
+    const leaderboards = useSelector((state) => state.leaderboard);
     return (
         <>
             <Header/>
+            <Loading/>
             <div className="container mx-auto">
                 <div className="bg-gray-100 p-8 flex flex-col gap-4 rounded shadow-lg mt-8 mb-32">
                     <h1 className="font-bold">Klasmen Pengguna Aktif</h1>

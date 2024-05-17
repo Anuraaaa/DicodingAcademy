@@ -9,7 +9,6 @@ import useInput from "./UseInput";
 import PropTypes from "prop-types";
 
 function DetailThread({threadId, loading, thread, users, userLoggedIn, isAuthenticate}) {
-    console.log(loading);
     const dispatch = useDispatch();
     const [valueComment, onCommentChange] = useInput('');
     const filterUser = users?.filter((data) => data.id == thread?.owner?.id);
@@ -154,7 +153,7 @@ function DetailThread({threadId, loading, thread, users, userLoggedIn, isAuthent
                 </div>
                 :
                 thread?.comments?.map((data, i) => {
-                    return <Comment key={i} name={data.owner.name} id={data.id} threadId={thread?.id} comment={parseHTML(data.content)} avatar={data.owner.avatar} createdAt={data.createdAt} likes={data.upVotesBy} dislikes={data.downVotesBy}/>
+                    return <Comment key={i} name={data.owner.name} id={data.id} threadId={thread?.id} comment={parseHTML(data.content)} avatar={data.owner.avatar} createdAt={data.createdAt} likes={data.upVotesBy} dislikes={data.downVotesBy} userLoggedIn={userLoggedIn}/>
                 })                        
             }
         </>
