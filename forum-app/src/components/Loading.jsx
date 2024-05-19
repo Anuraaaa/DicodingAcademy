@@ -1,11 +1,11 @@
-import LoadingBar from 'react-redux-loading-bar';
- 
-function Loading() {
+import LoadingBar from 'react-redux-loading-bar'
+
+function Loading () {
   return (
-    <div className="loading">
+    <div className='loading'>
       <LoadingBar />
     </div>
-  );
+  )
 }
- 
-export default Loading;
+
+export default Loading

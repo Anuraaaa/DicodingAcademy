@@ -1,21 +1,21 @@
-function userReducer(user = [], action = {}) {
-    if (action.type === "USER_CREATE") {
-        return {
-            ...user,
-            user: action.payload
-        };
+function userReducer (user = [], action = {}) {
+  if (action.type === 'USER_CREATE') {
+    return {
+      ...user,
+      user: action.payload
     }
-    return user;
+  }
+  return user
 }
 
-function userLoggedInReducer(userLoggedIn = [], action = {}) {
-    if (action.type === "USER_LOGGED_IN_CREATE") {
-        return {
-            ...userLoggedIn,
-            userLoggedIn: action.payload
-        };
+function userLoggedInReducer (userLoggedIn = [], action = {}) {
+  if (action.type === 'USER_LOGGED_IN_CREATE') {
+    return {
+      ...userLoggedIn,
+      userLoggedIn: action.payload
     }
-    return userLoggedIn;
+  }
+  return userLoggedIn
 }
 
-export {userReducer, userLoggedInReducer}
+export { userReducer, userLoggedInReducer }

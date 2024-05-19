@@ -1,36 +1,35 @@
-function parseHTML(html) {
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = html;
-    return tempElement.textContent || tempElement.innerText || '';
+function parseHTML (html) {
+  const tempElement = document.createElement('div')
+  tempElement.innerHTML = html
+  return tempElement.textContent || tempElement.innerText || ''
 }
 
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const now = new Date();
+function formatDate (dateString) {
+  const date = new Date(dateString)
+  const now = new Date()
 
-    const difference = now - date;
-    const daysDifference = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const difference = now - date
+  const daysDifference = Math.floor(difference / (1000 * 60 * 60 * 24))
 
-    if (daysDifference === 0) {
-        return 'Hari ini';
-    } else if (daysDifference === 1) {
-        return 'Kemarin';
-    } else {
-        return daysDifference + ' hari lalu';
-    }
+  if (daysDifference === 0) {
+    return 'Hari ini'
+  } else if (daysDifference === 1) {
+    return 'Kemarin'
+  } else {
+    return daysDifference + ' hari lalu'
+  }
 }
 
-function truncateString(str, maxLength) {
-    if (str.length > maxLength) {
-        return str.substring(0, maxLength) + '...';
-    } else {
-        return str;
-    }
+function truncateString (str, maxLength) {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength) + '...'
+  } else {
+    return str
+  }
 }
-
 
 export {
-    parseHTML,
-    formatDate,
-    truncateString
-};
+  parseHTML,
+  formatDate,
+  truncateString
+}

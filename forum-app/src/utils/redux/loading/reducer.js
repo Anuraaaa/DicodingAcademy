@@ -1,13 +1,13 @@
-function loadingReducer(loading = [], action = {}) {
-    if (action.type === 'LOADING_STATE') {
-        return {
-            ...loading,
-            loading: action.payload
-        }
+function loadingReducer (loading = [], action = {}) {
+  if (action.type === 'LOADING_STATE') {
+    return {
+      ...loading,
+      loading: action.payload
     }
-    return loading;
+  }
+  return loading
 }
 
 export {
-    loadingReducer
+  loadingReducer
 }
