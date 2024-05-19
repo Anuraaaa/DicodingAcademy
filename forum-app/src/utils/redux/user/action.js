@@ -1,23 +1,35 @@
+import { hideLoading, showLoading } from "react-redux-loading-bar";
 import { getAllUser, getUserLoggedIn } from "../../data";
+import { actionLoading } from "../loading/action";
 
 function actionGetUser() {
     return async (dispatch) => {
+        dispatch(showLoading());
+        dispatch(actionLoading(true));
         try {
             const {data} = await getAllUser();
             dispatch(actionUser(data.users));    
         } catch (error) {
             console.log(error);
+        } finally {
+            dispatch(hideLoading());
+            dispatch(actionLoading(false));
         }
     }
 }
 
 function actionGetUserLoggedIn() {
     return async (dispatch) => {
+        dispatch(showLoading());
+        dispatch(actionLoading(true));
         try {
             const user = await getUserLoggedIn();
             dispatch(actionUserLoggedIn(user.data.user));
         } catch (error) {
             console.log(error);
+        } finally {
+            dispatch(hideLoading());
+            dispatch(actionLoading(false));
         }
     }
 }

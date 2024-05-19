@@ -4,19 +4,19 @@ import { leaderboardReducer } from "./leaderboard/reducer";
 import { loadingReducer } from "./loading/reducer";
 import { singleThreadReducer, threadFilterReducer, threadReducer } from "./thread/reducer";
 import { userLoggedInReducer, userReducer } from "./user/reducer";
+import { combineReducers } from "redux";
 
-function rootReducer(state = {}, action = {}) {
-    return {
-        auth: authReducer(state.auth, action),
-        thread: threadReducer(state.thread, action),
-        filteredThread: threadFilterReducer(state.filteredThread, action),
-        detailThread: singleThreadReducer(state.detailThread, action),
-        leaderboard: leaderboardReducer(state.leaderboard, action),
-        user: userReducer(state.user, action),
-        userLoggedIn: userLoggedInReducer(state.userLoggedIn, action),
-        loading: loadingReducer(state.loading, action),
-        loadingBar: loadingBarReducer
-    }
-}
+const rootReducer = combineReducers({
+    auth: authReducer,
+    thread: threadReducer,
+    filteredThread: threadFilterReducer,
+    detailThread: singleThreadReducer,
+    leaderboard: leaderboardReducer,
+    user: userReducer,
+    userLoggedIn: userLoggedInReducer,
+    loading: loadingReducer,
+    loadingBar: loadingBarReducer
+
+})
 
 export default rootReducer;
