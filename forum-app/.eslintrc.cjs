@@ -2,7 +2,11 @@ const standard = require('eslint-config-standard')
 
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: { 
+    browser: true, 
+    es2020: true,
+    'cypress/globals': true 
+  },
   extends: [
     'standard',
     'eslint:recommended',
@@ -13,7 +17,12 @@ module.exports = {
   settings: { react: { version: '18.2.0' } },
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['react-refresh'],
+  plugins: [
+    'react',
+    'react-hooks',
+    'react-refresh',
+    'cypress'
+  ],
   rules: {
     'indent': 'off',
     'react/jsx-no-target-blank': 'off',
