@@ -15,6 +15,7 @@ module.exports = {
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   plugins: ['react-refresh'],
   rules: {
+    'indent': 'off',
     'react/jsx-no-target-blank': 'off',
     'react-refresh/only-export-components': [
       'warn',
