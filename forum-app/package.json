@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "e2e:open": "cypress open",
-    "e2e:run": "cypress run"
+    "e2e:run": "cypress run",
+    "ci:test": "vitest --no-watch && start-server-and-test dev http-get://0.0.0.0:5173 e2e"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
@@ -50,6 +51,7 @@
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^3.1.0",
     "sinon": "^18.0.0",
+    "start-server-and-test": "^2.0.3",
     "tailwindcss": "^3.4.3",
     "vite": "^5.2.0",
     "vitest": "^1.6.0"
