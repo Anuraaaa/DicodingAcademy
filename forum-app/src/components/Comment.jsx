@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from 'react'
 import PropTypes from 'prop-types'
 import { formatDate, parseHTML } from '../utils/formatter'
 import { dislikeComment, likeComment, neutralLikeComment } from '../utils/data'

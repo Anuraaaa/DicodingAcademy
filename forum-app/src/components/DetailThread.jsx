@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createComment, dislikeThread, likeThread, neutralLikeThread } from '../utils/data'
 import { formatDate, parseHTML } from '../utils/formatter'

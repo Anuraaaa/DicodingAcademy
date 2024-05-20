@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-unused-vars
+import React from 'react'
+
 function Header () {
   return (
     <div className='bg-gray-700 p-6 w-full'>

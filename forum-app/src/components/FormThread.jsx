@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from 'react'
 import { createThread } from '../utils/data'
 import { showToast } from '../utils/toast'
 import useInput from './UseInput'

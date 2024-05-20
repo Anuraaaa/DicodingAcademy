@@ -10,7 +10,7 @@ function createToast (message, color, backgroundColor) {
     toast.textContent = message
     activeToast = true
     const wrapper = document.getElementById('root')
-    wrapper.append(toast)
+    wrapper?.append(toast)
 
     toastTimer = setTimeout(() => {
       deleteToast()
