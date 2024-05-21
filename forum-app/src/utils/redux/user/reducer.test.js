@@ -1,3 +1,17 @@
+/*
+  - Test Scenarios for userReducer:
+    - Initial State:
+      - When no action is provided, the userReducer should return the initial state
+    - Handling USER_CREATE Action:
+      - When the USER_CREATE action is dispatched, the userReducer should update the state with the new user information
+
+  - Test Scenarios for userLoggedInReducer:
+    - Initial State:
+      - When no action is provided, the userLoggedInReducer should return the initial state
+    - Handling USER_LOGGED_IN_CREATE Action:
+      - When the USER_LOGGED_IN_CREATE action is dispatched, the userLoggedInReducer should update the state with the logged-in user information
+*/
+
 import { describe, it, expect } from 'vitest'
 import { userReducer, userLoggedInReducer } from './reducer'
 

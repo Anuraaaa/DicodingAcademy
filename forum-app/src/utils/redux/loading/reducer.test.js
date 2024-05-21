@@ -1,3 +1,13 @@
+/*
+  - Test Scenarios for loadingReducer:
+    - Initial State:
+      - When no action is provided, the reducer should return the initial state
+    - Handling LOADING_STATE Action:
+      - When the LOADING_STATE action is dispatched with true as payload, the reducer should update the state to indicate loading is true
+    - Handling Unknown Action Types:
+      - When an unknown action type is dispatched, the reducer should return the current state without making any changes
+*/
+
 import { describe, it, expect } from 'vitest'
 import { loadingReducer } from './reducer'
 

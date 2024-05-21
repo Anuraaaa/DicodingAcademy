@@ -1,3 +1,27 @@
+/*
+  - Test Scenarios for threadFilterReducer:
+    - Initial State:
+      - When no action is provided, the threadFilterReducer should return the initial state
+    - Handling THREAD_FILTER Action:
+      - When the THREAD_FILTER action is dispatched, the threadFilterReducer should update the state with the filtered threads
+    - Handling UP_VOTE_THREAD Action:
+      When the UP_VOTE_THREAD action is dispatched, the threadFilterReducer should update the state to reflect the upvoted thread
+
+  - Test Scenarios for threadReducer:
+    - Initial State:
+      - When no action is provided, the threadReducer should return the initial state
+    - Handling THREAD_CREATE Action:
+      - When the THREAD_CREATE action is dispatched, the threadReducer should update the state with the new thread
+
+  - Test Scenarios for singleThreadReducer:
+    - Initial State:
+      - When no action is provided, the singleThreadReducer should return the initial state
+    - Handling SINGLE_THREAD_CREATE Action:
+      - When the SINGLE_THREAD_CREATE action is dispatched, the singleThreadReducer should update the state with the new single thread
+    - Handling COMMENT_CREATE Action:
+      - When the COMMENT_CREATE action is dispatched, the singleThreadReducer should update the state with the new comment for the thread
+*/
+
 import { describe, it, expect } from 'vitest'
 import { threadReducer, threadFilterReducer, singleThreadReducer } from './reducer'
 

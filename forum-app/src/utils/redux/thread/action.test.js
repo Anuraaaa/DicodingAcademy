@@ -1,3 +1,33 @@
+/*
+    - Test Scenarios for Thread Actions:
+        - Initial Setup:
+            - Initialize the mock store before each test and clear all mocks after each test
+        - Fetching All Threads:
+            - When the action to fetch all threads is dispatched, the store should handle loading states and update the state with the fetched threads and filter threads action
+        - Fetching a Single Thread:
+            - When the action to fetch a single thread is dispatched, the store should handle loading states and update the state with the fetched single thread
+        - Upvoting a Thread:
+            - When the action to upvote a thread is dispatched, the store should update the state with the upvoted thread
+        - Downvoting a Thread:
+            - When the action to downvote a thread is dispatched, the store should update the state with the downvoted thread
+        - Neutral Voting a Thread
+            - When the action to neutral vote a thread is dispatched, the store should update the state with the neutral voted thread
+        - Upvoting a Single Thread:
+            - When the action to upvote a single thread is dispatched, the store should update the state with the upvoted single thread
+        - Downvoting a Single Thread:
+            - When the action to downvote a single thread is dispatched, the store should update the state with the downvoted single thread
+        - Neutral Voting a Single Thread:
+            - When the action to neutral vote a single thread is dispatched, the store should update the state with the neutral voted single thread
+        - Creating a Comment:
+            - When the action to create a comment is dispatched, the store should update the state with the created comment
+        - Upvoting a Comment:
+            - When the action to upvote a comment is dispatched, the store should update the state with the upvoted comment
+        - Downvoting a Comment:
+            - When the action to downvote a comment is dispatched, the store should update the state with the downvoted comment
+        - Neutral Voting a Comment:
+            - When the action to neutral vote a comment is dispatched, the store should update the state with the neutral voted comment
+*/
+
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import configureMockStore from 'redux-mock-store'
 import { thunk } from 'redux-thunk'

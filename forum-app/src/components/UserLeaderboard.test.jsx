@@ -1,3 +1,13 @@
+/*
+  - Test Scenarios for UserLeaderboard Component:
+    - Render User Name:
+      - Verify that the UserLeaderboard component renders the user's name correctly
+    - Render User Score:
+      - Verify that the UserLeaderboard component renders the user's score correctly
+    - Render User Avatar:
+      - Verify that the UserLeaderboard component renders the user's avatar correctly
+*/
+
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { render, screen } from '@testing-library/react'

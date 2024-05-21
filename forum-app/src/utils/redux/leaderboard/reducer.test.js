@@ -1,3 +1,13 @@
+/*
+  - Test Scenarios for leaderboardReducer:
+    - Initial State:
+      - When no action is provided, the reducer should return the initial state
+    - Handling LEADERBOARD_CREATE Action:
+      - When the LEADERBOARD_CREATE action is dispatched, the reducer should update the state with the provided leaderboard data
+    - Handling Unknown Action Types:
+      - When an unknown action type is dispatched, the reducer should return the current state without making any changes
+*/
+
 import { describe, it, expect } from 'vitest'
 import { leaderboardReducer } from './reducer'
 

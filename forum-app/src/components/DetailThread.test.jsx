@@ -1,3 +1,15 @@
+/*
+  - Test Scenarios for DetailThread Component:
+    - Render Thread Details Correctly:
+      - Ensure the component renders the provided thread details such as category, title, body, and owner's name
+    - Handle Comment Submission:
+      - Simulate entering a comment in the textbox and clicking the 'Kirim' button, and verify the createComment function is called with the correct arguments
+    - Handle Upvote (Like) Action:
+      - Simulate a click on the 'thumb_up' button and verify the likeThread function is called with the correct arguments
+    - Handle Downvote (Dislike) Action:
+      - Simulate a click on the 'thumb_down' button and verify the dislikeThread function is called with the correct arguments
+*/
+
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
