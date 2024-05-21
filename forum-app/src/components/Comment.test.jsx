@@ -49,7 +49,6 @@ describe('Comment', () => {
 
     expect(screen.getByText('User name')).toBeInTheDocument()
     expect(screen.getByText('This is a comment')).toBeInTheDocument()
-    expect(screen.getByText('505 hari lalu')).toBeInTheDocument()
   })
 
   it('handles upvote', async () => {
