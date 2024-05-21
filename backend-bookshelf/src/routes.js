@@ -1,34 +1,29 @@
+const { addBookHandler, getAllbooksHandler, getBookByIdHandler } = require("./handler")
+
 /* eslint-disable no-unused-vars */
 const routes = [
     {
         method: 'GET',
         path: '/',
         handler: (request, h) => {
-            return 'Homepage';
-        },
+            return 'Hello World'
+        }
+    },  
+    {
+        method: 'POST',
+        path: '/books',
+        handler: addBookHandler
     },
     {
         method: 'GET',
-        path: '/about',
-        handler: (request, h) => {
-            return 'About page';
-        },
+        path: '/books',
+        handler: getAllbooksHandler
     },
     {
-        method: '*',
-        path: '/{any*}',
-        handler: (request, h) => {
-            return 'Halaman tidak ditemukan';
-        },        
-    },
-    {
-        method: 'POST',
-        path: '/login',
-        handler: (request, h) => {
-            const { username, password } = request.payload;
-            return `Welcome ${username}!`;            
-        }
+        method: 'GET',
+        path: '/books/{id}',
+        handler: getBookByIdHandler
     }
-];
+]
  
-module.exports = routes;
+module.exports = routes
