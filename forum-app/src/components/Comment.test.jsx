@@ -1,3 +1,13 @@
+/*
+  - Test Scenarios for Comment Component:
+    - Render Comment Details Correctly:
+      - Ensure the component renders the provided user name and comment text
+    - Handle Upvote (Like) Action:
+      - Simulate a click on the 'thumb_up' button and verify the likeComment function is called with the correct arguments
+    - Handle Downvote (Dislike) Action:
+      - Simulate a click on the 'thumb_down' button and verify the dislikeComment function is called with the correct arguments
+*/
+
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'

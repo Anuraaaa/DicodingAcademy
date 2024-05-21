@@ -1,3 +1,15 @@
+/*
+  - Test Scenarios for Thread Component:
+    - Render Thread Details Correctly:
+      - Verify that the Thread component renders all the provided thread details correctly
+    - Handle Upvote Correctly:
+      - Verify that clicking the upvote button calls the likeThread function with the correct thread ID
+      - Verify that the actionUpVoteThread action creator returns the correct action object
+    - Handle Downvote Correctly:
+      - Verify that clicking the downvote button calls the dislikeThread function with the correct thread ID
+      - Verify that the actionDownVoteThread action creator returns the correct action object
+*/
+
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { describe, it, expect, beforeEach, vi } from 'vitest'

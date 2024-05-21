@@ -1,3 +1,13 @@
+/*
+  - Test Scenarios for FormThread Component:
+    - Display Validation Errors:
+      - Attempt to submit the form without filling any fields and verify that the appropriate validation error message is shown
+    - Call createThread with Correct Data:
+      - Fill in the form fields with valid data, submit the form, and verify that the createThread function is called with the correct data and the success message is shown
+    - Handle createThread Error:
+      - Simulate an error response from the createThread function, submit the form with valid data, and verify that the appropriate error message is shown
+*/
+
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { render, screen, fireEvent, act } from '@testing-library/react'

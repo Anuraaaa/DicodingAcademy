@@ -1,3 +1,15 @@
+/*
+  - Test Scenarios for authReducer:
+    - Initial State Handling:
+      - The reducer should return the initial state when no action is provided
+    - Handling LOGIN_SUCCESS Action:
+      - The reducer should correctly update the state to reflect a successful login
+    - Handling LOGOUT_SUCCESS Action:
+      - The reducer should correctly update the state to reflect a successful logout
+    - Handling Unknown Action Types:
+      - The reducer should return the current state when an unknown action type is provided
+*/
+
 import { describe, it, expect } from 'vitest'
 import { authReducer } from './reducer'
 

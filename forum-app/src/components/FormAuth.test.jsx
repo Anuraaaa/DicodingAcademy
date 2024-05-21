@@ -1,3 +1,19 @@
+/*
+  - Test Scenarios for FormAuth Component:
+    - Render Login Form Correctly:
+      - Verify that the login form renders with email and password fields, and without the username and password confirmation fields
+    - Render Register Form Correctly:
+      - Verify that the register form renders with email, password, username, and password confirmation fields
+    - Validate Login Form Fields:
+      - Attempt to submit the login form with empty fields and verify that the appropriate error message is shown
+    - Validate Register Form Fields:
+      - Attempt to submit the register form with empty fields and verify that the appropriate error message is shown
+    - Submit Login Form Successfully:
+      - Fill in the login form with valid data, submit it, and verify that the appropriate functions are called and the success message is shown
+    - Submit Register Form Successfully:
+      - Fill in the register form with valid data, submit it, and verify that the appropriate functions are called and the success message is shown
+*/
+
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'

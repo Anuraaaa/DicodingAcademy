@@ -1,3 +1,31 @@
+/*
+  test scenario for rootReducer
+
+  - Integration Tests for authReducer:
+    - Dispatch the LOGIN_SUCCESS action
+    - Verify that the state for auth is updated correctly with the user information and authentication status
+
+  - Integration Tests for threadReducer:
+    - Dispatch the THREAD_CREATE action
+    - Verify that the state for thread is updated correctly with the new thread information
+
+  - Integration Tests for userReducer:
+    - Dispatch the USER_CREATE action
+    - Verify that the state for user is updated correctly with the new user information
+
+  - Integration Tests for userLoggedInReducer:
+    - Dispatch the USER_LOGGED_IN_CREATE action
+    - Verify that the state for userLoggedIn is updated correctly with the logged-in user information
+
+  - Integration Tests for leaderboardReducer:
+    - Dispatch the LEADERBOARD_CREATE action
+    - Verify that the state for leaderboard is updated correctly with the new leaderboard information
+
+  - Integration Tests for loadingReducer:
+    - Dispatch the LOADING_STATE action
+    - Verify that the state for loading is updated correctly with the loading state
+*/
+
 import { describe, it, expect } from 'vitest'
 import { createStore } from 'redux'
 import rootReducer from './rootReducer'

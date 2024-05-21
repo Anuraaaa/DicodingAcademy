@@ -1,3 +1,21 @@
+/*
+    test scenario for user action
+
+    - Test Setup and Teardown:
+        - Ensure the store is reset before each test
+        - Ensure mocks are cleared after each test
+
+    - Fetching Users:
+        - Mock the getAllUser function to return a resolved promise with user data
+        - Dispatch the actionGetUser action
+        - Verify that the correct sequence of actions (showLoading, actionLoading(true), actionUser, hideLoading, actionLoading(false)) is dispatched
+
+    - Fetching Logged-in User:
+        - Mock the getUserLoggedIn function to return a resolved promise with logged-in user data
+        - Dispatch the actionGetUserLoggedIn action
+        - Verify that the correct sequence of actions (showLoading, actionLoading(true), actionUserLoggedIn, hideLoading, actionLoading(false)) is dispatched
+*/
+
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import configureMockStore from 'redux-mock-store'
 import { thunk } from 'redux-thunk'
