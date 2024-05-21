@@ -10,19 +10,30 @@ const addBookHandler = (request, h) => {
     const updatedAt = insertedAt
    
     const newBook = {
-        name, year, author, summary, publisher, pageCount, readPage, reading, insertedAt, updatedAt    
+        name: name, 
+        year: parseInt(year), 
+        author: author, 
+        summary: summary, 
+        publisher: publisher, 
+        pageCount: parseInt(pageCount), 
+        readPage: parseInt(readPage), 
+        finished: false,
+        reading: reading === 'yes'? true: false, 
+        insertedAt: insertedAt, 
+        updatedAt: updatedAt    
     }
    
     books.push(newBook)
    
-    const isSuccess = books.filter((book) => book.id === id).length > 0
-   
+    const isSuccess = books.filter((book) => book.id === id)
+
     if (isSuccess) {
       const response = h.response({
         status: 'success',
         message: 'Buku berhasil ditambahkan',
         data: {
-            bookId: id,
+            id: id,
+            ...newBook
         }
       })
       response.code(201)
@@ -31,7 +42,8 @@ const addBookHandler = (request, h) => {
    
     const response = h.response({
       status: 'fail',
-      message: 'Buku gagal ditambahkan',
+      message: `Buku gagal ditambahkan`,
+      data: newBook
     })
     response.code(500)
     return response
