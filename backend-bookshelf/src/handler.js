@@ -14,7 +14,7 @@ const addBookHandler = (request, h) => {
     reading
   } = request.payload
 
-  if (name === '') {
+  if ((name && name === '') || !name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku'
@@ -23,10 +23,19 @@ const addBookHandler = (request, h) => {
     return response
   }
 
-  if (parseInt(readPage) > parseInt(pageCount)) {
+  if (readPage && pageCount && parseInt(readPage) > parseInt(pageCount)) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount'
+    })
+    response.code(400)
+    return response
+  }
+
+  if (!readPage || !pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi readPage atau pageCount'
     })
     response.code(400)
     return response
@@ -38,6 +47,7 @@ const addBookHandler = (request, h) => {
 
   const parsingYear = parseInt(year)
   const isReading = reading === 'yes'
+  const isFinish = parseInt(pageCount) === parseInt(readPage)
   const newBook = {
     id,
     name,
@@ -47,7 +57,7 @@ const addBookHandler = (request, h) => {
     publisher,
     pageCount: parseInt(pageCount),
     readPage: parseInt(readPage),
-    finished: false,
+    finished: isFinish,
     reading: isReading,
     insertedAt,
     updatedAt
@@ -151,7 +161,7 @@ const updateBookByIdHandler = (request, h) => {
     reading
   } = request.payload
 
-  if (name === '') {
+  if ((name && name === '') || !name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal memperbarui buku. Mohon isi nama buku'
@@ -160,7 +170,7 @@ const updateBookByIdHandler = (request, h) => {
     return response
   }
 
-  if (parseInt(readPage) > parseInt(pageCount)) {
+  if (readPage && pageCount && parseInt(readPage) > parseInt(pageCount)) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount'
@@ -169,10 +179,18 @@ const updateBookByIdHandler = (request, h) => {
     return response
   }
 
+  if (!readPage || !pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Mohon isi readPage atau pageCount'
+    })
+    response.code(400)
+    return response
+  }
+
   const updatedAt = new Date().toISOString()
-
   const index = books.findIndex((book) => book.id === id)
-
+  const isFinish = parseInt(pageCount) === parseInt(readPage)
   const isReading = reading === 'yes'
 
   if (index !== -1) {
@@ -185,6 +203,7 @@ const updateBookByIdHandler = (request, h) => {
       publisher,
       pageCount: parseInt(pageCount),
       readPage: parseInt(readPage),
+      finished: isFinish,
       reading: isReading,
       updatedAt
     }
