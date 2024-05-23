@@ -1,4 +1,4 @@
-const { addBookHandler, getAllbooksHandler, getBookByIdHandler, updateBookByIdHandler, deleteBookByIdHandler } = require("./handler")
+const { addBookHandler, getAllbooksHandler, getBookByIdHandler, updateBookByIdHandler, deleteBookByIdHandler } = require('./handler')
 
 /* eslint-disable no-unused-vars */
 const routes = [
@@ -8,7 +8,7 @@ const routes = [
         handler: (request, h) => {
             return 'Hello World'
         }
-    },  
+    },
     {
         method: 'POST',
         path: '/books',
@@ -17,6 +17,16 @@ const routes = [
     {
         method: 'GET',
         path: '/books',
+        handler: getAllbooksHandler
+    },
+    {
+        method: 'POST',
+        path: '/books/',
+        handler: addBookHandler
+    },
+    {
+        method: 'GET',
+        path: '/books/',
         handler: getAllbooksHandler
     },
     {
@@ -33,7 +43,22 @@ const routes = [
         method: 'DELETE',
         path: '/books/{id}',
         handler: deleteBookByIdHandler
+    },
+    {
+        method: 'GET',
+        path: '/books/{id}/',
+        handler: getBookByIdHandler
+    },
+    {
+        method: 'PUT',
+        path: '/books/{id}/',
+        handler: updateBookByIdHandler
+    },
+    {
+        method: 'DELETE',
+        path: '/books/{id}/',
+        handler: deleteBookByIdHandler
     }
 ]
- 
+
 module.exports = routes
